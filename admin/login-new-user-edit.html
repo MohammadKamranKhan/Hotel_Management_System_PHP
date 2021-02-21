@@ -1,0 +1,131 @@
+<?php
+require("../database/database.html");
+   $id=@$_GET['ed'];
+     $query="select * from login where ID='$id' ";
+     $run=$con->query($query);
+   
+     while($row=$run->fetch_assoc())
+     {
+       
+       $food_id=$row['ID'];
+       $username=$row['username'];
+       $password=$row['password'];
+
+     }
+
+
+ ?>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Edit user </title>
+	 <script type="text/javascript" src="..\files\js\jquery-3.3.1.js"></script>
+  <script type="text/javascript" src="..\files\js\bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="..\files\css\bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="web-css.css">
+</head>
+<body class="container-fluid">
+   
+    
+
+ <div class="text-center" id="header" style="padding-top: 20px;margin-top: 20px;"><h3>Edit user </h3></div>
+      
+   <center>
+
+ <br><br>
+      <form action="login-new-user-edit.html?ed=<?php echo $id; ?>" method="post" class="form-horizontal" style="width: 60%">
+      	<div class="form-group">
+      	<label class="control-label col-md-2">username:</label>
+      	<div class="col-md-10">
+        <input type="text" name="uname1" class="form-control" required="required" placeholder="username" value="<?php  echo $username; ?>">
+        <div class="help-block text-left">
+          <?php if(@$_GET['user']) { echo "<p style='color:red'>Please enter atleast 8 characters!</p>";} ?>
+        </div>
+        </div>
+      	</div>
+
+        <div class="form-group">
+        <label class="control-label col-md-2">Old password:</label>
+        <div class="col-md-10">
+        <input type="text"  class="form-control" readonly="readonly" placeholder="old password" value="<?php  echo $password; ?>">
+        
+        </div>
+        </div>
+
+      	<div class="form-group">
+      	<label class="control-label col-md-2" >New password:</label>
+      	<div class="col-md-10">
+        <input type="password" name="upassword1" class="form-control" required="required" placeholder="new password" value="<?php  echo $password; ?>">
+        <div class="help-block text-left">
+          <?php if(@$_GET['pass']) { echo "<p style='color:red'>your password should contain at least 8 characters!</p>";} ?>
+        </div>
+      	</div>
+        </div>
+
+        <div class="form-group">
+        <label class="control-label col-md-2">Confirm password:</label>
+        <div class="col-md-10">
+        <input type="password" name="cpassword1" class="form-control" required="required" placeholder="confirm password" value="<?php  echo $password; ?>">
+        <div class="help-block text-left">
+          <?php if(@$_GET['dnth']) { echo "<p style='color:red'>Confirm password does not match!</p>";} ?>
+        </div>
+        
+        </div>
+        </div>
+         
+         
+      	<input type="submit" value="Update Now" name="submit1" id="bn" class="btn btn-primary" style="width: 30%">
+
+      </form>
+      </center>
+
+
+      <p></p>
+
+
+      
+     
+
+</body>
+</html>
+
+<?php
+if(isset($_POST['submit1']))
+{
+  $newID=@$_GET['ed'];
+  require "../database/database.html";
+   $user=$_POST['uname1'];
+   $upassword=$_POST['upassword1'];
+   $cpassword=$_POST['cpassword1'];
+
+   if(strlen($user) < 8)
+   {
+      echo "<script>window.open('login-new-user-edit.html?user=user&ed=$newID','_self')</script>";
+   }
+   else if (strlen($upassword) < 8) {
+     echo "<script>window.open('login-new-user-edit.html?pass=pass&ed=$newID','_self')</script>"; 
+   }
+   else if($upassword != $cpassword)
+   {
+    echo "<script>window.open('llogin-new-user-edit.html?user=user&ed=$newID','_self')</script>"; 
+
+   }
+   else
+   {
+    $query="update  login set username='$user', password='$upassword' where ID='$newID'";
+    if($con->query($query))
+     {
+         echo "<script>window.open('index.html?chlp=chlp&done1=done1','_self')</script>"; 
+
+     }
+     else
+     {
+         echo "<script>window.open('index.html?chlp=chlp&notdone1=notdone1','_self')</script>"; 
+
+     }
+
+   }
+
+
+}
+ ?>

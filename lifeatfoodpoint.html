@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>FoodPoint</title>
+	<script type="text/javascript" src="files\js\jquery-3.3.1.js"></script>
+	<script type="text/javascript" src="files\js\bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="files\css\bootstrap.min.css">
+   <link rel="icon" type="text/css" href="images\others\favicon.png">
+	
+	<link rel="stylesheet" type="text/css" href="web-css.css">
+</head>
+<body class="container-fluid">
+         
+     <br>
+     <!-- carousel -->    
+     <div class="header"> <?php require("carousel.html"); ?> </div> 
+     <!-- making navigation system in bootstrap -->
+     <div><?php require("navigation.html"); ?></div>
+
+     <!--  dividing main ( 9 column) and sidebar(right 3 column) -->
+     <div class="container-fluid">
+     <div class="row">
+     	<div class="col-md-9 main">
+      <div class="text-center"><h4>Look wonderful life in the universe of FoodPoint. You can see in pictures.</h4></div>
+     		<div class="row">
+        <?php
+          require("database/database.html");
+           $query="select * from gallary";
+           $run=$con->query($query);
+           while($row=$run->fetch_assoc())
+           {
+                $image_name=$row['image_name'];
+                $image_path=$row['image_path'];
+                echo "<div class='col-md-3'>";
+                echo "<a href='$image_path' target='_blank'>
+                <img src='$image_path' alt='$image_path' style='height:200px;width:100%;border:1px solid black;' title='$image_name' >
+                </a>";
+                echo "<div class='caption text-center'>$image_name</div>";
+                echo "</div>";
+           }
+
+         ?>
+        </div>
+     	</div>
+     	<!-- ending main  -->
+     	<div class="col-md-3">
+        <?php  require("sidebar.html"); ?>
+      </div>
+
+     </div>
+     </div>
+
+     <br>
+     <div class="foot">
+          <br>
+     	<?php echo " <center>Copy rights &copy reserved ".date("Y")."</center>"; require("footer.html");
+      
+       ?>
+     </div>
+
+
+
+</body>
+</html>

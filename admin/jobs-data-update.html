@@ -1,0 +1,153 @@
+
+<?php
+require("../database/database.html");
+$edt=@$_GET['up'];
+$query="select * from jobs where ID='$edt'";
+$run=$con->query($query);
+while($row=$run->fetch_assoc())
+{
+       
+       $department=$row['Department'];
+       $job_type=$row['Job_type'];
+       $Elig_cri=$row['Elig_cri'];
+       $Salary_pack=$row['Salary_pack'];
+       $experience=$row['Experience'];
+       $starting_date=$row['Starting_date'];
+       $last_date=$row['Last_date'];
+       $status=$row['Job_status'];
+}
+
+
+ ?>
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Edit job details</title>
+	<script type="text/javascript" src="..\files\js\jquery-3.3.1.js"></script>
+	<script type="text/javascript" src="..\files\js\bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="..\files\css\bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="web-css.css">
+</head>
+<body class="container-fluid">
+<center>
+
+<div class="text-center" id="header" style="padding-top: 20px;margin-top: 20px;"><h3>Change status of job:  <?php echo $job_type; ?> </h3></div>
+
+
+     <br>
+		<form method="post" action="jobs-data-update.html?up=<?php echo $edt; ?>" class="form-horizontal" style="width: 60%" > 
+		<div class="form-group">
+      <label class="control-label col-md-3">Department:</label>
+      <div class="col-md-9">
+      <input type="text"  name="dept1" value="<?php echo $department; ?>" class="form-control" placeholder="Enter Department name" required="required">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label col-md-3">Job type:</label>
+      <div class="col-md-9">
+      <input type="text" name="j_type1" value="<?php echo $job_type; ?>" class="form-control" placeholder="Enter Job type" required="required">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label col-md-3">Eligiblity Criteria:</label>
+      <div class="col-md-9">
+      <textarea class="form-control"   required="required" name="j_cri1" style="resize: none; width: 100%;" rows="6">
+        <?php echo $Elig_cri; ?>
+      </textarea>
+      
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label col-md-3">Salary Package:</label>
+      <div class="col-md-9">
+      <input type="number" min="1000" value="<?php echo $Salary_pack; ?>" max="1500000" name="s_package1" class="form-control" placeholder="1000-1500000" required="required">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label col-md-3">Experience:</label>
+      <div class="col-md-9">
+      <input type="text"  value="<?php echo$experience; ?>" name="experience1" class="form-control" placeholder="Minimum experience" required="required">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label col-md-3">Starting date:</label>
+      <div class="col-md-9">
+      <input type="date"  value="<?php echo $starting_date; ?>" name="s_date1" class="form-control" placeholder="e.g 20-09-208" required="required">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label col-md-3">Last date:</label>
+      <div class="col-md-9">
+      <input type="date"  value="<?php echo $last_date; ?>" name="l_date1" class="form-control" placeholder="e.g 20-09-208" required="required">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label col-md-3">Job Vacancy:</label>
+      <div class="col-md-9">
+      <select class="form-control" name="j_vacancy1" >
+        <option value="Available">Available</option>
+         <option value="Not Available">Not Available</option>
+      </select>
+      </div>
+    </div>
+
+    
+    <div class="form-group">
+      <input type="submit" name="job_submit1" class="btn btn-primary" value="update Job">
+    </div>
+
+  </form>
+
+</center>
+
+	</form>
+
+   
+</center>
+</body>
+</html>
+
+<?php
+      
+if(isset($_POST['job_submit1']))
+{
+
+     $id1=@$_GET['up'];
+     $dept1=$_POST['dept1'];       
+    $j_type1=$_POST['j_type1'];
+    $eli_cri1=$_POST['j_cri1'];
+    $sal_package1=$_POST['s_package1'];
+    $experience1=$_POST['experience1'];
+    $sta_date1=$_POST['s_date1'];
+    $fin_date1=$_POST['l_date1'];
+    $Vacancy1=$_POST['j_vacancy1'];
+                  
+                
+   $query="update  jobs set Job_type='$j_type1', Department='$dept1',Elig_cri='$eli_cri1',Salary_pack='$sal_package1',Experience='$experience1',Starting_date='$sta_date1',Last_date='$fin_date1',Job_status='$Vacancy1' where ID='$id1' ";
+
+
+   if(($con->query($query)))
+   {
+       echo "<script>window.open('index.html?j=j&done=done','_self')</script>";
+   }
+   else
+   {
+      echo "<script>window.open('index.html?j=j&notdone=notdone','_self')</script>";
+   }
+
+  
+
+   
+}
+
+
+
+ ?>

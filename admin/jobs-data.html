@@ -1,0 +1,169 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Jobs Details</title>
+	<script type="text/javascript" src="..\files\js\jquery-3.3.1.js"></script>
+	<script type="text/javascript" src="..\files\js\bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="..\files\css\bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="web-css.css">
+</head>
+<body class="container-fluid">
+
+
+
+
+<div class="table-responsive">
+
+<center>
+
+<?php
+
+
+          if(@$_GET['pass'])
+          {
+
+            echo "<br><p style='color:green; width:60%;padding:10px;background-color: #ffffcc;border:2px dashed green;'>Deleted All old jobs Successfully!</p>";
+          } 
+          else if(@$_GET['fail'])
+          {
+               echo "<p style='width:60%;padding:10px; color:red;background-color:#ffffcc;border:2px dashed red;'>Sorry! Could not be deleted!</p>";
+          }
+
+          if(@$_GET['pass1'])
+          {
+
+            echo "<br><p style='color:green; width:60%;padding:10px;background-color: #ffffcc;border:2px dashed green;'>Deleted  Successfully!</p>";
+          } 
+          else if(@$_GET['fail1'])
+          {
+               echo "<p style='width:60%;padding:10px; color:red;background-color:#ffffcc;border:2px dashed red;'>Sorry! Could not be deleted!</p>";
+          }
+
+          if(@$_GET['done'])
+          {
+
+            echo "<br><p style='color:green; width:60%;padding:10px;background-color: #ffffcc;border:2px dashed green;'>Updated Successfully!</p>";
+          } 
+          else if(@$_GET['notdone'])
+          {
+               echo "<br><p style='width:60%;padding:10px; color:red;background-color:#ffffcc;border:2px dashed red;'>Could not be deleted!</p>";
+          }
+
+
+ ?>
+
+<table class="table table-bordered table-hover" style="width: 100%;">
+<caption class="text-center"><h3><u>Jobs Data</u></h3>
+<div class="text-right"> <a href="index.html?j=j&rm=rm" class="btn btn-primary">Remove all past jobs with job status not available</a></div>
+</caption> 
+<br>
+
+
+
+<tr>
+  <th class="text-center">ID</th>
+  <th class="text-center">Jobs Serial#</th>
+  <th class="text-center">Department</th>
+  <th class="text-center">Job Type</th>
+  <th class="text-center">Eligibility Criteria</th>
+  <th class="text-center">Salary package</th>
+  <th class="text-center">Experience</th>
+  <th class="text-center">Starting Date</th>
+  <th class="text-center">Last Date</th>
+  <th class="text-center">Job Status</th>
+  <th class="text-center">Edit</th>
+  <th class="text-center">Remove</th>
+</tr>
+
+<?php
+     require("../database/database.html");
+     $query="select * from jobs";
+     $run=$con->query($query);
+     $count=0;
+     while($row=$run->fetch_assoc())
+     {
+       
+        $count++;
+       $branch_reg=$row['ID'];
+       $department=$row['Department'];
+       $job_type=$row['Job_type'];
+       $Elig_cri=$row['Elig_cri'];
+       $Salary_pack=$row['Salary_pack'];
+       $experience=$row['Experience'];
+       $starting_date=$row['Starting_date'];
+       $last_date=$row['Last_date'];
+       $status=$row['Job_status'];
+      
+      
+
+ ?>
+
+
+
+<tr class="text-center">
+ <td><?php echo $count; ?></td>
+  <td><?php echo $branch_reg;  ?></td>
+  <td><?php echo $department;  ?></td>
+  <td><?php echo $job_type;  ?></td>
+   <td><?php echo $Elig_cri;  ?></td>
+   <td><?php echo $Salary_pack;  ?></td>
+    <td><?php echo $experience;  ?></td>
+    <td><?php echo $starting_date;  ?></td>
+    <td><?php echo $last_date;  ?></td>
+    <td><?php echo $status;  ?></td>
+  <td><?php echo "<a href='jobs-data-update.html?up=$branch_reg' class='btn btn-primary' style='width:70px;'>Edit</a> "; ?></td>
+  <td><?php echo "<a href='index.html?j=j&delin=$branch_reg' class='btn btn-primary' style='width:70px;'>Delete</a> "; ?></td>
+</tr>
+  <?php  } ?>
+
+</table>
+
+
+</center>
+</div>
+
+</body>
+</html>
+
+<?php 
+
+
+     if(isset($_GET['rm']) )
+  {
+ 
+              
+              $query="delete from jobs where Job_status='Not Available'";
+              if($con->query($query))
+              {
+                 echo "<script>window.open('index.html?j=j&pass=pass','_self')</script>";
+              }
+              else
+              {
+                echo "<script>window.open('index.html?j=j&fail=fail','_self')</script>";
+              }
+            
+    }
+
+    if(isset($_GET['delin']) )
+  {
+
+         $id=@$_GET['delin'];
+         
+              
+              $query="delete from jobs where ID='$id'";
+              if($con->query($query))
+              {
+                 echo "<script>window.open('index.html?j=j&pass1=pass','_self')</script>";
+              }
+              else
+              {
+                echo "<script>window.open('index.html?j=j&fail1=fail','_self')</script>";
+              }
+            
+    }
+
+
+
+?>

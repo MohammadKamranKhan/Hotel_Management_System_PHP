@@ -1,0 +1,66 @@
+<div class="sidebar" style="background-color: lightgreen;font-family: verdana;padding: 0px 20px;">
+<br><br>
+<center>  
+<h3>Follow us on</h3>
+<p>
+	<span><a href="www.facebook.com"><img src="images/social-network/facebook.gif" style="width: 40px;height: 40px;"></a></span>
+	<span><a href="www.google.com"><img src="images/social-network/google.png" style="width: 40px;height: 40px;"></a></span>
+	<span><a href="www.insta.com"><img src="images/social-network/instagram2.jpg" style="width: 40px;height: 40px;"></a></span>
+	<span><a href="www.pinterest.com"><img src="images/social-network/pin.png" style="width: 40px;height: 40px;"></a></span>
+	<span><a href="www.twitter.com"><img src="images/social-network/twitter.png" style="width: 40px;height: 40px;"></a></span>
+</p>
+
+
+
+   <br>
+  <p>
+  <div style="margin-left: 10px;margin-right: 10px;">
+  	<h3 style="clear: both;">Future Plans</h3>
+  	<p class="text-justify">We belive we are like family without distinction of religion.We are planning to work with  new ideas like:</p>
+  	<ul class="text-justify">
+  		<li>Buy 1 get 1 free policy </li>
+  		<li>1 million jobs in all over world</li>
+  		<li>Christmis gifts for poor christians at christmas event</li>
+  		<li>Providing 20% discount on all religious events</li>
+  	</ul>
+</div>
+
+    </p>
+<div>
+
+
+<br><br>
+ 
+
+
+        <h3>Latest Jobs Notifications</h3>
+
+        <?php
+           require("database/database.html");
+          $query="select * from jobs where Job_status='Available' order by id desc limit 5";
+          $run=$con->query($query);
+          if($run->num_rows ==0)
+          {
+            echo "<p> No latest jobs!</p>";
+          }
+          else
+          {
+            while($row=$run->fetch_assoc())
+          {
+             $job_t=$row['Job_type'];
+             
+
+ ?>
+
+              <ul type="square">
+                  <li><?php echo"<a href='jobs.html'>$job_t</a> <span class='label label-primary'>Latest job</span>";?></li>
+             </ul>
+
+             <?php }} ?>
+
+
+      </div>
+
+</center>
+
+</div>

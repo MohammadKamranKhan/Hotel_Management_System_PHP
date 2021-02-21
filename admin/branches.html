@@ -1,0 +1,90 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Branches</title>
+	<script type="text/javascript" src="..\files\js\jquery-3.3.1.js"></script>
+	<script type="text/javascript" src="..\files\js\bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="..\files\css\bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="web-css.css">
+</head>
+<body class="container-fluid">
+<center>
+     <br>
+	
+	<form method="post" action="" class="form-horizontal" style="width: 60%" enctype="multipart/form-data"> 
+		   <?php  
+          if(@$_GET['done'])
+          {
+            echo "<p style='color:green; width:60%;padding:10px;background-color: #ffffcc;border:2px dashed green;'>All Files and data uploded successfully!</p>";
+          } 
+          else if(@$_GET['notdone'])
+          {
+               echo "<p style='width:60%;padding:10px; color:red;background-color:#ffffcc;border:2px dashed red;'>All Files and data failed to upload!</p>";
+          }
+     ?>
+
+		<div class="form-group">
+			<label class="control-label col-md-3">New Branch:</label>
+			<div class="col-md-9">
+			<input type="text" name="b_name" class="form-control" placeholder="Enter new Branch name" required="required">
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="control-label col-md-3">Branch Address:</label>
+			<div class="col-md-9">
+			<input type="text"  name="b_add" class="form-control" placeholder="Enter branch address" required="required">
+			</div>
+		</div>
+
+    <div class="form-group">
+      <label class="control-label col-md-3">Branch Phone:</label>
+      <div class="col-md-9">
+      <input type="number"  name="b_phone" class="form-control" placeholder="Enter branch Phone" required="required">
+      </div>
+    </div>
+
+		
+		<div class="form-group">
+			<input type="submit" name="branch_submit" class="btn btn-primary" value="Add new Branch">
+		</div>
+
+	</form>
+
+</center>
+</body>
+</html>
+
+<?php
+    
+require("../database/database.html");
+
+if(isset($_POST['branch_submit']))
+{
+         
+   $b_name=$_POST['b_name'];
+   $b_add=$_POST['b_add'];
+   $b_phone=$_POST['b_phone'];
+
+
+   $query="insert into branches(branch_name,branch_address,branch_phone) values('$b_name','$b_add','$b_phone')";
+
+
+   if($con->query($query))
+   {
+       echo "<script>window.open('index.html?bran=bran&done=done','_self')</script>";
+   }
+   else
+   {
+   	 echo "<script>window.open('index.html?bran=bran&notdone=notdone','_self')</script>";
+   }
+
+  
+
+   
+}
+
+
+
+ ?>

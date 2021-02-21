@@ -1,0 +1,118 @@
+
+<?php
+require("../database/database.html");
+$edt=@$_GET['chid'];
+$query="select * from orders where ID='$edt'";
+$run=$con->query($query);
+while($row=$run->fetch_assoc())
+{
+       
+       $order_id=$row['ID'];
+       $customer_name=$row['Customer_name'];
+       $customer_address=$row['Address'];
+       $customer_contact=$row['Email_phone'];
+       $food_ordered=$row['Food_ordered'];
+       $food_price=$row['Food_price'];
+       $food_qun=$row['food_quantity'];
+       $food_cate=$row['food_category'];
+       $total_bill=$row['Total_bill'];
+       $order_status=$row['Order_status'];
+       $order_time=$row['Order_time'];
+      
+
+}
+
+
+ ?>
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Branches Detail</title>
+	<script type="text/javascript" src="..\files\js\jquery-3.3.1.js"></script>
+	<script type="text/javascript" src="..\files\js\bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="..\files\css\bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="web-css.css">
+</head>
+<body class="container-fluid">
+<center>
+
+<div class="text-center" id="header" style="padding-top: 20px;margin-top: 20px;"><h3>Change food  order  :  <?php echo $food_ordered; ?> Ordered by <?php echo $customer_name; ?> </h3></div>
+<form action="change-order-status.html?chid=<?php echo $edt;  ?>" method="post">
+  <div class="table-responsive">
+  <table class="table table-bordered table-hover" width="60%">
+    <tr>
+  <th class="text-center">Order#</th>
+  <th class="text-center">Cutomer Name</th>
+  <th class="text-center">Customer Address</th>
+  <th class="text-center">Customer Contact</th>
+  <th class="text-center">Food Ordered</th>
+  <th class="text-center">Food Price</th>
+  <th class="text-center">Food category</th>
+  <th class="text-center">Food Quantity</th>
+  <th class="text-center">Change order status</th>
+  <th class="text-center">Ordered Time</th>
+  <th class="text-center">Total Bill</th>
+    </tr>  
+    <tr class="text-center">
+      <td><?php echo $order_id;?></td>
+      <td><?php echo $customer_name;?></td>
+      <td><?php echo $customer_address;?></td>
+      <td><?php echo $customer_contact;?></td>
+      <td><?php echo $food_ordered?></td>
+      <td><?php echo $food_price;?></td>
+      <td><?php echo $food_cate;?></td>
+      <td><?php echo $food_qun; ?></td>
+      <td>
+      <select class="form-control" method="post" name="ord_sta">
+        <option value="Pending">Pending</option>
+        <option value="Delivered">Delivered</option>
+      </select>
+      </td>
+      
+      <td><?php echo $order_time;?></td>
+      <td><?php echo $total_bill;?></td>
+      
+    </tr>
+    </table>
+    </div>
+<br>
+     
+    
+    <div class="form-group">
+      <input type="submit" name="order_submit1" class="btn btn-primary" value="Update Order">
+    </div>
+
+  </form>
+
+</center>
+
+	</form>
+
+   
+</center>
+</body>
+</html>
+
+<?php
+      
+if(isset($_POST['order_submit1']))
+{
+
+       $id=$_GET['chid'];
+       $order_stat=$_POST['ord_sta'];
+       $query="update orders set Order_status='$order_stat' where ID='$id'";
+
+   if(($con->query($query)))
+   {
+       echo "<script>window.open('index.html?ord=ord&done=done','_self')</script>";
+   }
+   else
+   {
+      echo "<script>window.open('index.html?ord=ord&notdone=notdone','_self')</script>";
+   }
+       
+
+
+}
+ ?>

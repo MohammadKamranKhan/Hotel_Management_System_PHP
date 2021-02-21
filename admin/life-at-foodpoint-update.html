@@ -1,0 +1,85 @@
+
+<?php
+require("../database/database.html");
+$edt=@$_GET['un'];
+$query="select * from gallary where ID='$edt'";
+$run=$con->query($query);
+while($row=$run->fetch_assoc())
+{
+       
+        $image_name=$row['image_name'];
+}
+
+
+ ?>
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Edit job details</title>
+	<script type="text/javascript" src="..\files\js\jquery-3.3.1.js"></script>
+	<script type="text/javascript" src="..\files\js\bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="..\files\css\bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="web-css.css">
+</head>
+<body class="container-fluid">
+<center>
+
+<div class="text-center" id="header" style="padding-top: 20px;margin-top: 20px;"><h3>Change image gallary </h3></div>
+
+
+     <br>
+		<form method="post" action="life-at-foodpoint-update.html?un=<?php echo $edt; ?>" class="form-horizontal" style="width: 60%" > 
+		<div class="form-group">
+      <label class="control-label col-md-3">Image1:</label>
+      <div class="col-md-9">
+      <input type="text" placeholder="enter name from image" name="image_name1"  value="<?php echo $image_name; ?>" class="form-control" required="required">
+      
+      </div>
+    </div>
+
+    
+    <div class="form-group">
+      <input type="submit" name="gallary_submit1" class="btn btn-primary" value="update name">
+    </div>
+
+  </form>
+
+</center>
+
+	</form>
+
+   
+</center>
+</body>
+</html>
+
+<?php
+      
+if(isset($_POST['gallary_submit1']))
+{
+
+     $id1=@$_GET['un'];
+     $image_name1=$_POST['image_name1'];
+                  
+                
+   $query="update  gallary set image_name='$image_name1' where ID='$id1' ";
+
+
+   if(($con->query($query)))
+   {
+       echo "<script>window.open('index.html?laf=laf&done=done','_self')</script>";
+   }
+   else
+   {
+      echo "<script>window.open('index.html?laf=laf&notdone=notdone','_self')</script>";
+   }
+
+  
+
+   
+}
+
+
+
+ ?>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>FoodPoint</title>
+	<script type="text/javascript" src="files\js\jquery-3.3.1.js"></script>
+	<script type="text/javascript" src="files\js\bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="files\css\bootstrap.min.css">
+   <link rel="icon" type="text/css" href="images\others\favicon.png">
+	
+	<link rel="stylesheet" type="text/css" href="web-css.css">
+</head>
+<body class="container-fluid">
+         
+     <br>
+     <!-- carousel -->    
+     <div class="header"> <?php require("carousel.html"); ?> </div> 
+     <!-- making navigation system in bootstrap -->
+     <div><?php require("navigation.html"); ?></div>
+
+     <!--  dividing main ( 9 column) and sidebar(right 3 column) -->
+     <div class="container-fluid">
+     <div class="row">
+     	<div class="col-md-9 main">
+     		 <center><h3><u>Manager Profile</u></h3></center>
+        <center>
+
+             <div class="row" >
+                
+
+      <?php   
+              require("database/database.html");
+              $id=@$_GET['id'];
+              $query="select * from aboutus where ID='$id'";
+              $rn=$con->query($query);
+              if($rn->num_rows ==0)
+              {
+                echo "<h3 class='text-center'> 'No record Found' </h3>";
+                            
+                             }
+              
+              while($row=$rn->fetch_assoc())
+              {
+                // $man_id=$row['ID'];
+                 $man_name=$row['Name']; 
+                 $man_path=$row['ImagePath'];
+                 $man_post=$row['Post'];
+                 $man_quali=$row['Qualification'];
+                 $man_join_date=$row['JointDate'];
+                 $man_det=$row['Des'];
+              }
+
+         ?>
+
+         <center>
+           <a href="<?php echo $man_path; ?>" target="_blank">
+           <img src="<?php echo $man_path; ?>" alt="<?php echo $man_name; ?>" style="width: 60%;height:400px; ">
+           </a>
+           <div class="caption"><?php echo $man_name."  after Annual meeting 2015"; ?></div>
+           <div class="text-justify" style="margin-left: 100px;">
+           <h4>Full Name: <span><?php echo $man_name; ?></span></h4>
+           <h4>Qulification: <span><?php echo $man_quali; ?></span></h4>
+           <h4>Post : <span><?php echo $man_post; ?></span></h4>
+           <h4>Joined Date: <span><?php echo $man_join_date; ?></span></h4>
+           <h4>Description:</h4>
+           <p>
+             <?php echo $man_det ?>
+           </p>
+           <h4>Follow our manager at:</h4>
+           <a href="#">www.facebook.com/<?php echo $man_name; ?></a>
+           <br>
+           <a href="#">www.twitter.com/<?php echo $man_name; ?></a>
+           </div>
+         </center>
+            <br>
+           
+
+        
+
+            </div>
+
+     	</div>
+     	<!-- ending main  -->
+     	<div class="col-md-3">
+        <?php  require("sidebar.html"); ?>
+      </div>
+
+     </div>
+     </div>
+
+     <br>
+     <div class="foot">
+          <br>
+     	<?php echo " <center>Copy rights &copy reserved ".date("Y")."</center>"; require("footer.html"); ?>
+     </div>
+
+
+
+</body>
+</html>

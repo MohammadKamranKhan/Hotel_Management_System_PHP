@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>FoodPoint</title>
+	<script type="text/javascript" src="files\js\jquery-3.3.1.js"></script>
+	<script type="text/javascript" src="files\js\bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="files\css\bootstrap.min.css">
+  <link rel="icon" type="text/css" href="images\others\favicon.png">
+	
+	<link rel="stylesheet" type="text/css" href="web-css.css">
+</head>
+<body class="container-fluid">
+         
+     <br>
+     <!-- carousel -->    
+     <div class="header"> <?php require("carousel.html"); ?> </div> 
+     <!-- making navigation system in bootstrap -->
+     <div><?php require("navigation.html"); ?></div>
+
+     <!--  dividing main ( 9 column) and sidebar(right 3 column) -->
+     <div class="container-fluid">
+     <div class="row">
+     	<div class="col-md-9 main">
+     		<center><h3>Welcome to Our Official Website!</h3></center>
+     		<p>
+     			This is our official website. We respect our customers. We love food lovers. 
+     			We are the first who think and care about customers need. We have no heavy burden on customers. Everthing is provided in very economical package. You might have visited many hotels where money is first, but we have opposite traditions to all resturants and hotels. Customers are valueable to us. We have some great offers. You can look at them.
+     		</p>
+             <div class="row" >
+
+              <div class="col-md-4">
+              <div class="thumbnail">
+              <img src="images/hotel-navigation/Chopan-Kabob.jpg" style="width: 400px;height: 200px;" alt="image not found">
+               <div class="caption text-center">
+                 <p class=" bg-primary">Pakistani foods with best offers</p>
+                  <p>Normal</p>
+                  <p>Economical</p>
+                  <p>Expensive</p>
+                </div>
+             </div>
+            </div>
+
+
+            <div class="col-md-4">
+              <div class="thumbnail">
+              <img src="images/hotel-navigation/BEEF-VINDALOO.jpg" style="width: 400px;height: 200px;" alt="image not found">
+               <div class="caption text-center">
+                  <p class=" bg-primary">Indian foods with best offers</p>
+                  <p>Normal</p>
+                  <p>Economical</p>
+                  <p>Expensive</p>
+                </div>
+             </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="thumbnail">
+              <img src="images/hotel-navigation/fried-mashi.jpg" style="width: 400px;height: 200px;" alt="image not found">
+               <div class="caption text-center">
+                 <p class=" bg-primary">Chinese foods with best offers</p>
+                  <p>Normal</p>
+                  <p>Economical</p>
+                  <p>Expensive</p>
+                </div>
+             </div>
+            </div>
+
+             <div class="col-md-4">
+              <div class="thumbnail">
+              <img src="images/hotel-navigation/Borscht.jpg" style="width: 400px;height: 200px;" alt="image not found">
+               <div class="caption text-center">
+                 <p class=" bg-primary">Russians foods with best offers</p>
+                  <p>Normal</p>
+                  <p>Economical</p>
+                  <p>Expensive</p>
+                </div>
+             </div>
+            </div>
+
+             <div class="col-md-4">
+              <div class="thumbnail">
+              <img src="images/hotel-navigation/Coca-Cola-2L.jpg" style="width: 400px;height: 200px;" alt="image not found">
+               <div class="caption text-center">
+                 <p class=" bg-primary">Cold Drinks with best offers</p>
+                  <p>Normal</p>
+                  <p>Economical</p>
+                  <p>Expensive</p>
+                </div>
+             </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="thumbnail">
+              <img src="images/hotel-navigation/Cheese-burger.jpg" style="width: 400px;height: 200px;" alt="image not found">
+               <div class="caption text-center">
+                 <p class=" bg-primary">Fast foods with best offers</p>
+                  <p>Normal</p>
+                  <p>Economical</p>
+                  <p>Expensive</p>
+                </div>
+             </div>
+            </div>
+
+
+            </div>
+
+     	</div>
+     	<!-- ending main  -->
+     	<div class="col-md-3">
+        <?php  require("sidebar.html"); ?>
+      </div>
+
+     </div>
+     </div>
+
+     <br>
+     <div class="foot">
+          <br>
+     	<?php echo " <center>Copy rights &copy reserved ".date("Y")."</center>"; require("footer.html");
+      
+       ?>
+     </div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,261 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>FoodPoint</title>
+  <script type="text/javascript" src="files\js\jquery-3.3.1.js"></script>
+  <script type="text/javascript" src="files\js\bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="files\css\bootstrap.min.css">
+  <script type="text/javascript" src="web-javascript.js"></script>
+  <link rel="stylesheet" type="text/css" href="web-css.css">
+   <link rel="icon" type="text/css" href="images\others\favicon.png">
+</head>
+<body class="container-fluid">
+         
+     <br>
+     <!-- carousel -->    
+     <div class="header"> <?php require("carousel.html"); ?> </div> 
+     <!-- making navigation system in bootstrap -->
+     <div><?php require("navigation.html"); ?></div>
+
+     <!--  dividing main ( 9 column) and sidebar(right 3 column) -->
+     <div class="container-fluid">
+     <div class="row">
+      <div class="col-md-9 main">
+         
+
+         <center>
+         <?php
+          
+          if(@$_GET['done'])
+          {
+
+            echo "<br><p style='color:green; width:60%;padding:10px;background-color: #ffffcc;border:2px dashed green;'>Thank you so much for your order! We will deliver your order as soon as possible.</p>";
+          } 
+          else if(@$_GET['notdone'])
+          {
+               echo "<br><p style='width:60%;padding:10px; color:red;background-color:#ffffcc;border:2px dashed red;'>Order could not be done!</p>";
+          }
+
+
+
+           ?>
+           
+          <form action="" method="post" class="form-horizontal" style="width: 60%">
+               
+                <center><h3>Please provide below information</h3></center>
+                <br>
+           
+
+
+               <div class="form-group">
+               <label class="control-label col-md-3"> Name:</label>
+               <div class="col-md-9">
+               <input type="text" name="u_name" class="form-control" placeholder="Enter your Name" required="required">
+               </div>
+               </div>
+
+               <div class="form-group">
+               <label class="control-label col-md-3"> Email or Phone:</label>
+               <div class="col-md-9">
+               <input type="text" name="u_contact" class="form-control" placeholder="Enter Phone or Email" required="required">
+               </div>
+               </div>
+
+               <div class="form-group">
+               <label class="control-label col-md-3"> Address:</label>
+               <div class="col-md-9">
+               <input type="text" name="u_add" class="form-control" placeholder="Enter your Address" required="required">
+               </div>
+               </div>
+
+               <div class="form-group">
+               <label class="control-label col-md-3"> Quantity:</label>
+               <div class="col-md-9">
+               <input type="number" min="1"  name="f_quan" class="form-control" placeholder="Enter Quantity of food" required="required" onkeyup="myPrice()" id="one">
+               </div>
+               </div>
+
+                <?php
+                require("database/database.html");
+                $id=@$_GET['id'];
+                $query="select * from fastfoodsdrinks where ID='$id'";
+                $run=$con->query($query);
+                while ($row=$run->fetch_assoc())
+                {
+                  $name=$row['Name'];
+                 $price=$row['Price']; 
+                 $image=$row['Image'];
+                 $discount=$row['Discount'];
+                 $r_price=$row['R_price'];
+
+                 
+                $discounted=00;
+                 if($discount > 1)
+                 {
+                    $dis=($discount/100)*$price;
+                    $discounted=$price-$dis;
+                 }
+                 else
+                 {
+                    $discounted=$price;
+                 }
+                
+
+
+
+
+
+          ?>
+           
+               <div class='form-group'>
+               <label class='control-label col-md-3'> Food Ordered:</label>
+               <div class='col-md-9'>
+               <div class='form-control-static text-left'><?php echo $name; ?></div>
+               <input type="hidden" name="f_name" value="<?php echo $name; ?>">
+               </div>
+               </div>
+
+
+
+                <div class='form-group'>
+                <label class='control-label col-md-3'> Food Price:</label>
+                 <div class='col-md-9'>
+                 <div class="form-control-static text-left" >Rs. <?php echo $discounted; ?></div>
+                 
+                 <input type="hidden" name="f_price" id="two" value="<?php echo $discounted?>">
+                 </div>
+                 </div>
+
+                 <div class="form-group">
+                   <label class='control-label col-md-3'>Total Bill:</label>
+                   <div class='col-md-9'>
+                 <div class="form-control-static text-left" id="three">Rs. <?php echo $discounted; ?></div>
+                 <input type="hidden" name="total_price"  value="<?php echo $discounted?>">
+                 </div>
+
+           <div class="form-group">
+           <br>
+           <label class="control-label col-md-3"></label>
+           <br><br>
+           <input type="submit" name="place_order" value="Place Order" class="btn btn-primary">
+           </div>
+           <br><br>
+           <div class="text-justify">
+          
+           <p>After placing your order, you will get your spicy food in only 3-4 hours.</p>
+           <p>We have currently dealing on COD method for payment. Soon we will launch online payment method.</p>
+           </div>
+
+          </form>
+
+          <?php } ?>
+          </center>
+
+        
+      
+
+      </div>
+      <!-- ending main  -->
+      <!--  starting sidebar -->
+      <div class="col-md-3">
+        <?php  require("sidebar.html"); ?>
+        </div>
+        <!--  ending sidebar -->
+
+     </div>
+     </div>
+
+     <br>
+     <div class="foot">
+          <br>
+      <?php echo " <center>Copy rights &copy reserved ".date("Y")."</center>"; require("footer.html"); ?>
+     </div>
+
+
+
+</body>
+</html>
+
+<?php
+
+if(isset($_POST['place_order']))
+{
+  $name=$_POST['u_name'];
+  $add=$_POST['u_add'];
+  $contact=$_POST['u_contact'];
+  $Quantity=$_POST['f_quan'];
+   $f_name=$_POST['f_name'];
+   $f_price=$_POST['f_price'];
+  $total_price=$Quantity * $f_price;
+ echo $food=@$_GET['food'];
+  echo "<br>". $f_new=md5($food);
+  $file_name=$_SERVER['PHP_SELF'];
+  $id=@$_GET['id'];
+
+
+
+  require("database/database.html");
+  $query="insert into orders(Customer_name,Email_phone,Address,Food_ordered,Food_price,Order_status,Total_bill,food_quantity,food_category)
+  values('$name','$contact','$add','$f_name','$f_price','Pending','$total_price','$Quantity','$f_new')";
+
+ 
+require 'phpmailer/PHPMailerAutoload.php';
+require('mail.php');
+
+$mail = new PHPMailer;
+
+
+//$mail->SMTPDebug = 3;                               // Enable verbose debug output
+
+$mail->isSMTP();                                      // Set mailer to use SMTP
+$mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
+$mail->SMTPAuth = true;                               // Enable SMTP authentication
+$mail->Username = Email;                 // SMTP username
+$mail->Password = Password;                           // SMTP password
+$mail->SMTPSecure = 'ssl';                            // Enable TLS encryption, `ssl` also accepted
+$mail->Port = 465;                                    // TCP port to connect to
+
+$mail->setFrom(Email, 'FoodPoint');
+$mail->addAddress(Email, 'FoodPoint');     // Add a recipient
+
+$mail->isHTML(true);                                  // Set email format to HTML
+
+$mail->Subject = 'You have a new food ordered from '.$name.'';
+$mail->Body    = '<br> You have a new food order from customer '.$name. ' <br><br> The details of <b> '.$name.' </b> are below:<br>
+Customer Name : <b> '.$name.' </b><br>
+Customer Address: <b> '.$add.' </b><br>
+Customer Contact: <b> '.$contact.' </b><br>
+Food Quantity: <b> '.$Quantity.' </b><br>
+Food Name : <b> '.$f_name.' </b><br>
+Food Category: <b> '.$food.' </b><br>
+Food  Price: <b> '.$f_price.' </b><br>
+Total price: <b> '.$total_price.' </b><br>
+
+
+';
+// $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+/*
+if(!$mail->send()) {
+    echo 'Message could not be sent.';
+    echo 'Mailer Error: ' . $mail->ErrorInfo;
+} else {
+    echo 'Message has been sent';
+}
+*/
+  if($con->query($query) and $mail->send())
+  {
+       echo "<script>window.open('purchase-form-fastfood.html?id=$id&done=done','_self')</script>";
+  }
+  else
+  {
+     echo "<script>window.open('purchase-form-fastfood.html?id=$id&notdone=notdone','_self')</script>";
+  }
+
+
+
+}
+
+ ?>
+

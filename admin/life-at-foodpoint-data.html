@@ -1,0 +1,126 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Life at food Point Data</title>
+	<script type="text/javascript" src="..\files\js\jquery-3.3.1.js"></script>
+	<script type="text/javascript" src="..\files\js\bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="..\files\css\bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="web-css.css">
+</head>
+<body class="container-fluid">
+
+
+
+
+<div class="table-responsive">
+
+<center>
+
+
+<?php
+
+
+          if(@$_GET['pass'])
+          {
+
+            echo "<br><p style='color:green; width:60%;padding:10px;background-color: #ffffcc;border:2px dashed green;'>Deleted Successfully!</p>";
+          } 
+          else if(@$_GET['fail'])
+          {
+               echo "<p style='width:60%;padding:10px; color:red;background-color:#ffffcc;border:2px dashed red;'>Could not be deleted!</p>";
+          }
+
+          if(@$_GET['done'])
+          {
+
+            echo "<br><p style='color:green; width:60%;padding:10px;background-color: #ffffcc;border:2px dashed green;'>Updated Successfully!</p>";
+          } 
+          else if(@$_GET['notdone'])
+          {
+               echo "<br><p style='width:60%;padding:10px; color:red;background-color:#ffffcc;border:2px dashed red;'>Could not be deleted!</p>";
+          }
+
+
+ ?>
+
+<table class="table table-bordered table-hover" style="width: 90%;">
+<caption class="text-center"><h3><u>Image Gallary Details</u></h3></caption> 
+
+<tr>
+  <th class="text-center">ID</th>
+  <th class="text-center">Image Name</th>
+  <th class="text-center">Image Path</th>
+  <th class="text-center">Image</th>
+  <th class="text-center">Edit Name</th>
+  <th class="text-center">Delete</th>
+</tr>
+
+<?php
+     require("../database/database.html");
+     $query="select * from gallary";
+     $run=$con->query($query);
+     $count=0;
+     while($row=$run->fetch_assoc())
+     {
+      $count++;
+       $image_reg=$row['ID'];
+       $image_name=$row['image_name'];
+       $image_path=$row['image_path'];
+
+ ?>
+
+
+
+<tr class="text-center">
+  
+
+  <td><?php echo $count; ?></td>
+  <td><?php echo $image_name;  ?></td>
+  <td><?php echo $image_path;  ?></td>
+  <td><img src="<?php echo '../'.$image_path; ?>" alt="<?php echo $image_name ?>" style="width: 30%;height: 50px;"></td>
+  <td><?php echo "<a href='life-at-foodpoint-update.html?un=$image_reg' class='btn btn-primary' style='width:100px;'>Edit Name</a> "; ?></td>
+  <td><?php echo "<a href='index.html?laf=laf&delin=$image_reg' class='btn btn-primary' style='width:70px;'>Delete</a> "; ?></td>
+</tr>
+  <?php  } ?>
+
+</table>
+</center>
+</div>
+
+</body>
+</html>
+
+<?php 
+
+if(isset($_GET['delin']) )
+  {
+
+         $id=@$_GET['delin'];
+         $query="select * from gallary where ID='$id'";
+         $run=$con->query($query);
+       
+        while($row=$run->fetch_assoc())
+         {
+          
+           $food_image=$row['image_path'];
+
+          }      
+              
+              $query="delete from gallary where ID='$id'";
+              if($con->query($query) and unlink("../".$food_image))
+              {
+                 echo "<script>window.open('index.html?laf=laf&pass=pass','_self')</script>";
+              }
+              else
+              {
+                echo "<script>window.open('index.html?laf=laf&fail=fail','_self')</script>";
+              }
+            
+    }
+
+
+
+
+?>

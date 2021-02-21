@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Apply Now</title>
+	<script type="text/javascript" src="files\js\jquery-3.3.1.js"></script>
+	<script type="text/javascript" src="files\js\bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="files\css\bootstrap.min.css">
+  <script type="text/javascript" src="Web-javascript.js"></script>
+   <link rel="icon" type="text/css" href="images\others\favicon.png">
+	
+	<link rel="stylesheet" type="text/css" href="web-css.css">
+</head>
+<body class="container-fluid">
+         
+     <br>
+     <!-- carousel -->    
+     <div class="header"> <?php require("carousel.html"); ?> </div> 
+     <!-- making navigation system in bootstrap -->
+     <div><?php require("navigation.html"); ?></div>
+
+     <!--  dividing main ( 9 column) and sidebar(right 3 column) -->
+     <div class="container-fluid">
+     <div class="row">
+     	<div class="col-md-9 main" style="font-size: 14px;">
+     	<center>
+    
+      <?php
+              $jb=@$_GET['jobt'];
+       ?>
+       
+       <form class="form-horizontal" style="width: 80%;" method="post" action="apply-now.html?jobt=<?php echo $jb; ?>" enctype="multipart/form-data">
+
+     <br><br>
+      <div class="text-justify;">
+       <p><b>Note:</b> Please provide your true informatin and click <span class="label label-primary">Apply Now</span>. You will get an email for job interview.</p>
+       <p>Beore to click <span class="label label-primary">Apply Now</span> take a look of information and then proceed otherwise you will not be able to edit your information. In case of wrong information, you will not get a job.</p>
+       </div>
+
+
+
+       <?php
+          
+          if(@$_GET['done'] and @$_GET['cnic'])
+          {
+
+
+       $cnic=@$_GET['cnic'];
+            echo "<br><p style='color:green; width:60%;padding:10px;background-color: #ffffcc;border:2px dashed green;'>Successfully Done we have recieved your application.</p>
+             <a href='print-form-application.html?cnic=$cnic' target='_self' class='btn btn-default'>Print Rollno slip</a>
+            ";
+          } 
+           
+          if(@$_GET['notdone'])
+          {
+               echo "<br><p style='width:60%;padding:10px; color:red;background-color:#ffffcc;border:2px dashed red;'>Your applicatoin failed to be proceeded.</p>";
+          }
+
+
+
+           ?>
+         
+         
+         <div class="form-group">           
+           <label class="col-md-6 control-label">Job Type:</label>
+           <div class="col-md-3">
+             <p class="form-control-static"><?php echo @$_GET['jobt']; ?></p>   
+             <input type="hidden" name="jobtype" value="<?php echo @$_GET['jobt'];; ?>">          
+           </div>       
+         </div>
+      
+        
+         <div class="form-group">
+           <label class="col-md-2 control-label">Full Name:</label>
+           <div class="col-md-10">
+             <input type="text" name="f_name" placeholder="your full name here" class="form-control" required="required">
+           </div>
+         </div>
+
+         <div class="form-group">
+           <label class="col-md-2 control-label">Email:</label>
+           <div class="col-md-10">
+             <input type="text" name="f_email" placeholder="your email  here" class="form-control">
+           </div>
+         </div>
+
+         <div class="form-group">
+           <label class="col-md-2 control-label">CNIC:</label>
+           <div class="col-md-10">
+             <input type="text" name="f_cnic" placeholder="your cnic example 12345-1234567-1" class="form-control" length="20">
+           </div>
+         </div>
+
+         <div class="form-group">
+           <label class="col-md-2 control-label">Contact Number:</label>
+           <div class="col-md-10">
+             <input type="text" name="f_phone" placeholder="e.g 0333-5423923" class="form-control" length="20">
+           </div>
+         </div>
+
+
+         <div class="form-group">
+           <label class="col-md-2 control-label">Qulification:</label>
+           <div class="col-md-10">
+             <input type="text" name="f_quali" placeholder="your qulification  here" class="form-control">
+           </div>
+         </div>
+
+         <div class="form-group">
+           <label class="col-md-2 control-label">Address:</label>
+           <div class="col-md-10">
+             <input type="text" name="f_add" placeholder="your permanent address  here" class="form-control">
+           </div>
+         </div>
+
+         <div class="form-group">
+           <label class="col-md-2 control-label">Skills:</label>
+           <div class="col-md-10">
+             <input type="text" name="f_skills" placeholder="mention your skills like PHP, Photoshop" class="form-control">
+           </div>
+         </div>
+
+         <div class="form-group">
+           <label class="col-md-2 control-label">Image:</label>
+           <div class="col-md-10">
+             <input type="file" name="f_image" placeholder="Please select an image" class="form-control">
+           <div class="help-block">
+           <?php 
+              if(@$_GET['image'])
+              {
+               echo "<p style='color:red'> Image type should be jpg,png and jpeg.</p>";
+              }
+              else if(@$_GET['size'])
+              {
+                 echo "<p style='color:red'> Image size should be less than 2mb.</p>";
+              }
+              else if(@$_GET['fileAlready'])
+              {
+                echo "<p style='color:red'>  image already exists!</p>";
+              }
+
+
+         ?>
+           </div>
+         </div>
+
+         <div class="form-group">
+           <input type="submit" name="f_submit" value="Apply Now" class="btn btn-primary" >
+         </div>
+
+         
+
+       </form>
+
+      </center>
+     	</div>
+     	<!-- ending main  -->
+     	<div class="col-md-3">
+        <?php  require("sidebar.html"); ?>
+      </div>
+
+     </div>
+     </div>
+
+     <br>
+     <div class="foot">
+          <br>
+     	<?php echo " <center>Copy rights &copy reserved ".date("Y")."</center>"; require("footer.html");
+      
+       ?>
+     </div>
+
+
+
+</body>
+</html>
+
+<?php
+      require("database/database.html");
+      require 'phpmailer/PHPMailerAutoload.php';
+      require('mail.php');
+
+
+if(isset($_POST['f_submit']))
+{
+          $jb=@$_GET['jobt'];
+          $job_type=$_POST['jobtype'];
+          $fullname=$_POST['f_name'];
+          $email=$_POST['f_email'];
+          $cnic=$_POST['f_cnic'];
+          $phone=$_POST['f_phone'];
+          $qulification=$_POST['f_quali'];
+          $address=$_POST['f_add'];
+          $skills=$_POST['f_skills'];
+          $status="pending";
+         
+      $foo_image_name=$_FILES['f_image']['name'];
+      $foo_image_size=$_FILES['f_image']['size'];
+      $foo_image_path=$_FILES['f_image']['tmp_name'];
+      $foo_image_type=$_FILES['f_image']['type'];
+      $files_to_upload="images/applicants/".basename($foo_image_name);
+      $image_path_to_save_in_database="images/applicants/".basename($foo_image_name);
+       
+
+   if(!( ($foo_image_type=="image/png") or ($foo_image_type=="image/jpeg") or ($foo_image_type=="image/jpg")))
+   {
+      // header("location:upload-chinese-foods-details.html?image=nottrue");
+     echo "<script>window.open('apply-now.html?&image=nottrue&jobt=$jb','_self')</script>";
+      exit();
+   }
+
+      if($foo_image_size > 20000000)
+   {
+     // header("location:upload-chinese-foods-details.html?size=nottrue");
+     echo "<script>window.open('apply-now.html&size=nottrue&jobt=$jb','_self')</script>";
+      exit();
+   }
+
+   if(file_exists($files_to_upload)){
+    // header("location:upload-chinese-foods-details.html?fileAlready=nottrue");
+     echo "<script>window.open('apply-now.html?fileAlready=nottrue&jobt=$jb','_self')</script>";
+      exit();
+   }
+
+   $query="insert into jobcandidate(fullname,email,cnic,contact,qualification,address,skills,image,jobtype,status) values('$fullname','$email','$cnic','$phone','$qulification','$address','$skills','$image_path_to_save_in_database','$jb','$status')";
+    
+
+
+$mail = new PHPMailer;
+
+
+//$mail->SMTPDebug = 3;                               // Enable verbose debug output
+
+$mail->isSMTP();                                      // Set mailer to use SMTP
+$mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
+$mail->SMTPAuth = true;                               // Enable SMTP authentication
+$mail->Username = Email;                 // SMTP username
+$mail->Password = Password;                           // SMTP password
+$mail->SMTPSecure = 'ssl';                            // Enable TLS encryption, `ssl` also accepted
+$mail->Port = 465;                                    // TCP port to connect to
+
+$mail->setFrom(Email, 'FoodPoint');
+$mail->addAddress(Email, 'FoodPoint');     // Add a recipient
+
+$mail->isHTML(true);                                  // Set email format to HTML
+
+$mail->Subject = 'You have a new job candidate for  '.$jb.' ';
+$mail->Body    = '<br> You have candidate for job of  '.$job_type. ' <br><br> The details of <b> '.$fullname.' </b> are below:<br>
+Candidate  Name : <b> '.$fullname.' </b><br>
+Candidate  Email: <b> '.$email.' </b><br>
+Candidate  Cnic: <b> '.$cnic.' </b><br>
+Candidate Contact: <b> '.$phone.' </b><br>
+Candidate Qulification: <b> '.$qulification.' </b><br>
+Candidate Address : <b> '.$address.' </b><br>
+Canididate Skills: <b> '.$skills.' </b><br>';
+
+
+
+   if(($con->query($query)) and ($mail->send()) and (move_uploaded_file($foo_image_path, $files_to_upload)))
+   {
+     echo "<script>window.open('print-form-application.html?done=done&cnic=$cnic&jobt=$jb','_self')</script>";
+     //  header("location:upload-chinese-foods-details.html?done=done"); 
+   }
+   else
+   {
+     // header("location:upload-chinese-foods-details.html?notdone=notdone");
+     echo "<script>window.open('apply-now.html?notdone=notdone&jobt=$jb','_self')</script>";
+   }
+
+
+
+   
+}
+
+
+
+ ?>

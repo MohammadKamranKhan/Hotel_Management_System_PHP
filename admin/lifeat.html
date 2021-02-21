@@ -1,0 +1,242 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Image gallary</title>
+	<script type="text/javascript" src="..\files\js\jquery-3.3.1.js"></script>
+	<script type="text/javascript" src="..\files\js\bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="..\files\css\bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="web-css.css">
+</head>
+<body class="container-fluid">
+<center>
+     <br>
+	
+	<form method="post" action="" class="form-horizontal" style="width: 60%" enctype="multipart/form-data"> 
+		  <?php  
+          if(@$_GET['done'])
+          {
+            echo "<p style='color:green; width:60%;padding:10px;background-color: #ffffcc;border:2px dashed green;'>All Files and data uploded successfully!</p>";
+          } 
+          else if(@$_GET['notdone'])
+          {
+               echo "<p style='width:60%;padding:10px; color:red;background-color:#ffffcc;border:2px dashed red;'>All Files and data failed to upload!</p>";
+          }
+     ?>
+
+		<div class="form-group">
+      <label class="control-label col-md-3">Image1:</label>
+      <div class="col-md-9">
+      <input type="file"  name="f_image1" class="form-control" required="required">
+      <div class="help-block">
+      <?php 
+              if(@$_GET['image1'])
+              {
+               echo "<p style='color:red'> Image type should be jpg,png and jpeg.</p>";
+              }
+              else if(@$_GET['size1'])
+              {
+                 echo "<p style='color:red'> Image size should be less than 2mb.</p>";
+              }
+              else if(@$_GET['fileAlready1'])
+              {
+                echo "<p style='color:red'>  image already exists!</p>";
+              }
+
+
+        ?>
+        
+      </div>
+      </div>
+    </div>
+
+		<div class="form-group">
+      <label class="control-label col-md-3">Image2:</label>
+      <div class="col-md-9">
+      <input type="file" name="f_image2" class="form-control" required="required">
+      <div class="help-block">
+      <?php 
+              if(@$_GET['image2'])
+              {
+               echo "<p style='color:red'> Image type should be jpg,png and jpeg.</p>";
+              }
+              else if(@$_GET['size2'])
+              {
+                 echo "<p style='color:red'> Image size should be less than 2mb.</p>";
+              }
+              else if(@$_GET['fileAlready2'])
+              {
+                echo "<p style='color:red'> image already exists!</p>";
+              }
+
+
+        ?>
+        
+      </div>
+      </div>
+    </div>
+
+		<div class="form-group">
+			<label class="control-label col-md-3">Image3 :</label>
+			<div class="col-md-9">
+			<input type="file"  name="f_image3" class="form-control" required="required">
+			<div class="help-block">
+			<?php 
+              if(@$_GET['image3'])
+              {
+               echo "<p style='color:red'> Image type should be jpg,png and jpeg.</p>";
+              }
+              else if(@$_GET['size3'])
+              {
+              	 echo "<p style='color:red'> Image size should be less than 2mb.</p>";
+              }
+              else if(@$_GET['fileAlready3'])
+              {
+              	echo "<p style='color:red'> image already exists!</p>";
+              }
+
+
+			  ?>
+				
+			</div>
+			</div>
+		</div>
+
+		
+
+		<div class="form-group">
+			<input type="submit" name="image_submit" class="btn btn-primary" value="Submit Now">
+		</div>
+
+	</form>
+
+   
+
+</center>
+</body>
+</html>
+
+<?php
+      require("../database/database.html");
+  
+
+
+if(isset($_POST['image_submit']))
+{
+
+         
+         $image1_name=$_FILES['f_image1']['name'];
+         $image1_size=$_FILES['f_image1']['size'];
+         $image1_path=$_FILES['f_image1']['tmp_name'];
+         $image1_type=$_FILES['f_image1']['type'];
+
+          $image2_name=$_FILES['f_image2']['name'];
+         $image2_size=$_FILES['f_image2']['size'];
+         $image2_path=$_FILES['f_image2']['tmp_name'];
+         $image2_type=$_FILES['f_image2']['type'];
+
+
+          $image3_name=$_FILES['f_image3']['name'];
+         $image3_size=$_FILES['f_image3']['size'];
+         $image3_path=$_FILES['f_image3']['tmp_name'];
+         $image3_type=$_FILES['f_image3']['type'];
+
+
+         $file1_to_upload="../images/food-point-gallary/".basename($image1_name);
+         $image1_path_to_save_in_database="images/food-point-gallary/".basename($image1_name);
+    
+          $file2_to_upload="../images/food-point-gallary/".basename($image2_name);
+         $image2_path_to_save_in_database="images/food-point-gallary/".basename($image2_name);
+    
+         $file3_to_upload="../images/food-point-gallary/".basename($image3_name);
+         $image3_path_to_save_in_database="images/food-point-gallary/".basename($image3_name);
+    
+
+    // for image 1
+
+   if(!( ($image1_type=="image/png") or ($image1_type=="image/jpeg") or ($image1_type=="image/jpg")))
+   {
+   	  echo "<script>window.open('index.html?lif=lif&image1=nottrue','_self')</script>";
+   	  exit();
+   }
+
+    // for image 2
+
+   if(!( ($image2_type=="image/png") or ($image2_type=="image/jpeg") or ($image2_type=="image/jpg")))
+   {
+      echo "<script>window.open('index.html?lif=lif&image2=nottrue','_self')</script>";
+      exit();
+   }
+
+    // for image 3 checking type
+
+   if(!( ($image3_type=="image/png") or ($image3_type=="image/jpeg") or ($image3_type=="image/jpg")))
+   {
+      echo "<script>window.open('index.html?lif=lif&image3=nottrue','_self')</script>";
+      exit();
+   }
+
+
+       // checking image size 1
+      if($image1_size > 2000000)
+   {
+   	  echo "<script>('index.html?lif=lif&size1=nottrue','_self')</script>";
+   	  exit();
+   }
+
+    // checking image size 2
+      if($image2_size > 2000000)
+   {
+      echo "<script>('index.html?lif=lif&size2=nottrue','_self')</script>";
+      exit();
+   }
+    // checking image size 3
+      if($image3_size > 2000000)
+   {
+      echo "<script>('index.html?lif=lif&size3=nottrue','_self')</script>";
+      exit();
+   }
+
+   // checking if image 1 already exists or not
+   if(file_exists($file1_to_upload)){
+   echo "<script>window.open('index.html?lif=lif&fileAlready1=nottrue','_self')</script>";
+   	  exit();
+   }
+
+   // checking if image 2 already exists or not
+   if(file_exists($file2_to_upload)){
+   echo "<script>window.open('index.html?lif=lif&fileAlready2=nottrue','_self')</script>";
+      exit();
+   }
+
+   // checking if image 3 already exists or not
+   if(file_exists($file3_to_upload)){
+   echo "<script>window.open('index.html?lif=lif&fileAlready3=nottrue','_self')</script>";
+      exit();
+   }
+
+   $query="insert into gallary(image_name,image_path) values('$image1_name','$image1_path_to_save_in_database');";
+   $query.="insert into gallary(image_name,image_path) values('$image2_name','$image2_path_to_save_in_database');";
+   $query.="insert into gallary(image_name,image_path) values('$image3_name','$image3_path_to_save_in_database');";
+
+
+   if(move_uploaded_file($image1_path, $file1_to_upload) and move_uploaded_file($image2_path, $file2_to_upload) and move_uploaded_file($image3_path, $file3_to_upload) and $con->multi_query($query))
+   {
+       // header("location:upload-chinese-foods-details.html?done=done"); 
+       echo "<script>window.open('index.html?lif=lif&done=done','_self')</script>";
+   }
+   else
+   {
+   	 // header("location:upload-chinese-foods-details.html?notdone=notdone"); 
+       echo "<script>window.open('index.html?lif=lif&notdone=notdone','_self')</script>";
+   }
+
+  
+
+   
+}
+
+
+
+ ?>

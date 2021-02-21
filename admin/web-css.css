@@ -1,0 +1,4 @@
+body{background-color: #FFEFD5;font-family: verdana;}
+#header{height: 100px;width: 100%;background-color: green;color: white;}
+.sidebar{;border-right: 2px solid black;height: 2000px;}
+.text-point h3 {height: 400px;background-color: green;}

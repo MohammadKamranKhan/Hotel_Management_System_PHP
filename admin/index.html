@@ -1,0 +1,462 @@
+<?php
+session_start();
+if(!($_SESSION['admin']))
+{
+  header("location:login.html?error=Please Login First!");
+}
+require("../database/database.html");
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+     <title>Admin Panel</title>
+	<script type="text/javascript" src="..\files\js\jquery-3.3.1.js"></script>
+	<script type="text/javascript" src="..\files\js\bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="..\files\css\bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="web-css.css">
+</head>
+<body class="container-fluid">
+<br>
+<div id="header" class="well ">
+	<h3 class="text-center">
+   <?php
+        if(@$_GET['admin_name'])
+        {
+         echo " Welcome to The Admin Panel";
+        }
+
+        else if(@$_GET['ffd'])
+        {
+           echo " Foods and Drinks Panel";
+        }
+
+        else if(@$_GET['ri'])
+        {
+           echo " Russian Foods Detail";
+        }
+
+        else if(@$_GET['chin'])
+        {
+           echo " Chinese Food Panel";
+        }
+
+        else if(@$_GET['cs'])
+        {
+           echo " Chinese Food Detail";
+        }
+
+        else if(@$_GET['infoods'])
+        {
+           echo " Indian Foods Panel";
+        }
+
+        else if(@$_GET['pakfoods'])
+        {
+           echo " Pakistani Foods Panel";
+        }
+
+        else if(@$_GET['russfoods'])
+        {
+           echo " Russian Foods Panel";
+        }
+        else if(@$_GET['bran'])
+        {
+           echo " Company Branches Panel";
+        }
+        else if(@$_GET['abou'])
+        {
+           echo " About US Panel";
+        }
+
+        else if(@$_GET['pn'])
+        {
+           echo " Pakistani Foods Detail";
+        }
+
+        else if(@$_GET['abo'])
+        {
+           echo " Managers Detail Panel";
+        }
+
+        else if(@$_GET['br'])
+        {
+           echo " Company Branches Detail";
+        }
+
+        else if(@$_GET['lif'])
+        {
+           echo " Images for  FoodPoint";
+        }
+
+        else if(@$_GET['ff'])
+        {
+           echo " Fast foods + Drinks Panel";
+        }
+
+        else if(@$_GET['in'])
+        {
+           echo " Indian Foods Details";
+        }
+
+        else if(@$_GET['imageCaro'])
+        {
+           echo " Images for  Carousel";
+        }
+        else if(@$_GET['imageCaro1'])
+        {
+           echo " Images for  Carousel";
+        }
+
+         else if(@$_GET['new'])
+        {
+           echo " Add a new user";
+        }
+
+         else if(@$_GET['jbs'])
+        {
+           echo " Jobs Panel";
+        }
+
+       
+         else if(@$_GET['j'])
+        {
+           echo " Jobs Panel";
+        }
+
+         else if(@$_GET['ord'])
+        {
+           echo " Order Details ";
+        }
+
+
+        // showing all orders
+         else if(@$_GET['ord'])
+        {
+           echo " Order Details ";
+        }
+
+
+        // showing delivered orders
+         else if(@$_GET['ord3'])
+        {
+           echo " Delivered Order Details ";
+        }
+
+         // showing pending orders
+         else if(@$_GET['ord2'])
+        {
+           echo " Pending Order Details ";
+        }
+
+        // showing password panel
+         else if(@$_GET['chlp'])
+        {
+           echo " Login Details ";
+        }
+
+        // showing life at food point gally data panel
+         else if(@$_GET['laf'])
+        {
+           echo " Life at foodPoint Gallary ";
+        }
+
+
+       // showing job applicants data
+         else if(@$_GET['jbc'])
+        {
+           echo " Job Applicants data ";
+        }
+
+        
+
+      else
+        {
+
+        echo " Welcome to admin Panel : ".$_SESSION['admin'];
+
+        }
+
+
+    ?>
+
+  </h3>
+</div>
+<!-- working with sidebar and main content panel -->
+<div class="row">
+     <div class="col-md-2 sidebar ">
+       
+		<h4>Welcome:  <?php echo $_SESSION['admin'];?></h4>
+
+		<nav class="navbar navbar-stacked">
+			<div class="nav nabbar-nav">
+				
+				           <h4><a href="#" data-toggle="collapse" data-target="#add">Insert data </a> <span class="caret"></span></h4>
+
+                    <div class="collapse" id="add">
+                      <li><a href="index.html?infoods=infoods">Indian foods </a></li>
+                   <li><a href="index.html?pakfoods=pakfoods">Pakistani foods</a></li>
+                   <li><a href="index.html?russfoods=russfoods">Russian  foods</a></li>
+                   <li><a href="index.html?chin=chin">Chinese  foods</a></li>  
+                   <li><a href="index.html?ffd=ffd">Fast food + Drinks</a></li>
+                   <li><a href="index.html?jbs=jbs">Jobs</a></li>
+                   <li><a href="index.html?bran=bran">Branches</a></li>
+                   <li><a href="index.html?abou=abou">Aboutus</a></li>
+                   <li><a href="index.html?lif=lif">Life At FoodPoint</a></li>
+                   
+                   </div>
+                   </a>
+               
+			
+			             <h4><a href="#" data-toggle="collapse" data-target="#view">View Data </a> <span class="caret"></span></h4>
+                   <div class="collapse" id="view">
+                   <li><a href="index.html?in=in">Indian foods</a></li>
+                   <li><a href="index.html?pn=pn"">pakistani foods</a></li>
+                   <li><a href="index.html?ri=ri">russian  foods</a></li>
+                   <li><a href="index.html?cs=cs">Chinese  foods</a></li>
+                   <li><a href="index.html?ff=ff">Fast food + Drinks</a></li>
+                   <li><a href="index.html?j=j">Jobs</a></li>
+                   <li><a href="index.html?br=br">Branches</a></li>
+                   <li><a href="index.html?abo=abo">Aboutus</a></li>
+                   <li><a href="index.html?laf=laf">Life At FoodPoint</a></li>
+                   <li><a href="index.html?jbc=jbc">Job Applicants</a></li>
+                   
+                   <li><a href="index.html?ord=ord">Orders</a></li>
+                   </div>
+                   </a>
+               
+				
+
+				          <h4>
+                  <a href="#" data-toggle="collapse" data-target="#account"> Account Settings  </a> 
+                    <span class="caret"></span></h4>
+                   <div class="collapse" id="account">
+                   <li><a href="index.html?chlp=chlp">Show Authunticated users</a></li>
+                   
+                  </div>
+			     
+                  <h4><a href="#" data-toggle="collapse" data-target="#others">Carousel Images</a> <span class="caret"> </span></h4>
+                  <div class="collapse" id="others">
+				          <li><a href="index.html?imageCaro=imageCaro">Change Carousel Images</a></li>
+                  <li><a href="index.html?imageCaro1=imageCaro1">Carousel Images</a></li>
+				          
+				          
+                  </div>
+                
+
+                <h4><a href="logout.html" >Logout</a></h4>
+				
+			</div>
+		</nav>
+		
+	</div>
+	<!-- sidebar ending-->
+	
+
+	<div class="col-md-10">
+		<p style="font-size: 19px;">This panel is only for authorised persons. No body else admin can use this panel. Here, you can delete, update, insert content of website. You can make website more dynamic using this panel.</p>
+		<?php
+            if(isset($_GET['infoods'])=="infoods")
+            {
+            	require("upload-indian-foods-details.html");
+            	
+
+            }
+
+            else  if(isset($_GET['pakfoods'])=="pakfoods")
+            {
+            	require("upload-pakistani-foods-details.html");
+            
+            }
+
+            else  if(isset($_GET['jbs']))
+            {
+              require("jobs-update.html");
+            
+            }
+
+            else  if(isset($_GET['new']))
+            {
+              require("add-new-user.html");
+            
+            }
+
+            // showing life at food point data in view data
+            else  if(isset($_GET['laf']))
+            {
+              require("life-at-foodpoint-data.html");
+            
+            }
+
+             else  if(isset($_GET['j']))
+            {
+              require("jobs-data.html");
+            
+            }
+
+            else  if(isset($_GET['ff']))
+            {
+              require("fast-foods.html");
+            
+            }
+
+            
+
+
+            // getting login panel username and password panel
+            else  if(isset($_GET['chlp']))
+            {
+              require("show-login-details.html");
+            
+            }
+
+            else  if(isset($_GET['ri']))
+            {
+              require("russian-foods.html");
+            
+            }
+
+             else  if(isset($_GET['in']))
+            {
+              require("indian-foods.html");
+            
+            }
+
+            
+
+            else  if(isset($_GET['imageCaro'])=="imageCaro")
+            {
+              require("image-carousel.html");
+            
+            }
+           
+           // management page of image carousels
+            else  if(isset($_GET['imageCaro1']))
+            {
+              require("caro-images.html");
+            
+            }
+
+            else  if(isset($_GET['pn']))
+            {
+              require("pakistani-foods.html");
+            
+            }
+
+            else  if(isset($_GET['russfoods'])=="russfoods")
+            {
+              require("upload-russian-foods-details.html");
+            
+            }
+
+            else  if(isset($_GET['abo']))
+            {
+              require("about-us-data.html");
+            
+            }
+             
+             else  if(isset($_GET['chin']))
+            {
+              require("upload-chinese-foods-details.html");
+            
+            }
+
+             else  if(isset($_GET['cs']))
+            {
+              require("chinese-foods.html");
+            
+            }
+
+
+             else  if(isset($_GET['br']))
+            {
+              require("branches-data.html");
+            
+            }
+
+
+             else  if(isset($_GET['bran'])=="bran")
+            {
+                  require("branches.html");
+            
+            }
+
+            // showing pending orders
+
+             else  if(isset($_GET['ord2']))
+            {
+                  require("show-pending-orders.html");
+            
+            }
+
+          // showing all orders
+             else  if(isset($_GET['ord']))
+            {
+                  require("orders.html");
+            
+            }
+
+            // showing delivered orders
+             else  if(isset($_GET['ord3']))
+            {
+                  require("show-delivered-orders.html");
+            
+            }
+             
+             
+              else  if(isset($_GET['lif'])=="lif")
+            {
+                  require("lifeat.html");
+            
+            }
+
+           // showing applicants data
+            else  if(isset($_GET['jbc']))
+            {
+                   require("jobs-applicants.html");
+            
+            }
+
+             else  if(isset($_GET['abou'])=="abou")
+            {
+                  require("about-us-modify.html");
+            
+            }
+            else  if(isset($_GET['ffd'])=="ffd")
+            {
+                  require("foods-drinks.html");
+            
+            }
+            else if(isset($_GET['clear']))
+            {
+              require("../database/database.html");
+              $query="delete from orders where Order_status='delivered' ";
+              if($con->query($query))             
+              {
+                 echo "<script>window.open('index.html?ord=ord&pass=pass','_self')</script>";
+              }
+              else
+              {
+                echo "<script>window.open('index.html?ord=ord&fail=fail','_self')</script>";
+
+              }
+
+            }
+
+          
+
+
+		 ?>
+      
+
+
+       
+
+	</div>
+	<!-- main panel ending-->
+</div>
+
+
+
+</body>
+</html>

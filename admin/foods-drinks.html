@@ -1,0 +1,168 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Foods and Drinks</title>
+	<script type="text/javascript" src="..\files\js\jquery-3.3.1.js"></script>
+	<script type="text/javascript" src="..\files\js\bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="..\files\css\bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="web-css.css">
+</head>
+<body class="container-fluid">
+<center>
+     <br>
+   
+	<form method="post" action="" class="form-horizontal" style="width: 60%;margin-top:" enctype="multipart/form-data"> 
+		  
+    <?php  
+          if(@$_GET['done'])
+          {
+            echo "<p style='color:green; width:60%;padding:10px;background-color: #ffffcc;border:2px dashed green;'>All Files and data uploded successfully!</p>";
+          } 
+          else if(@$_GET['notdone'])
+          {
+               echo "<p style='width:60%;padding:10px; color:red;background-color:#ffffcc;border:2px dashed red;'>All Files and data failed to upload!</p>";
+          }
+
+          
+
+
+     ?>
+		<div class="form-group">
+			<label class="control-label col-md-3"> Name:</label>
+			<div class="col-md-9">
+			<input type="text" name="f_name" class="form-control" placeholder="Enter name" required="required">
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="control-label col-md-3"> Price:</label>
+			<div class="col-md-9">
+			<input type="number" min="1" name="f_price" class="form-control" placeholder="Enter  price" required="required">
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="control-label col-md-3"> Image:</label>
+			<div class="col-md-9">
+			<input type="file"  name="f_image" class="form-control" required="required">
+			<div class="help-block">
+			<?php 
+              if(@$_GET['image'])
+              {
+               echo "<p style='color:red'> Image type should be jpg,png and jpeg.</p>";
+              }
+              else if(@$_GET['size'])
+              {
+              	 echo "<p style='color:red'> Image size should be less than 2mb.</p>";
+              }
+              else if(@$_GET['fileAlready'])
+              {
+              	echo "<p style='color:red'> Food image already exists!</p>";
+              }
+
+
+			  ?>
+				
+			</div>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="control-label col-md-3">Food Discount:</label>
+			<div class="col-md-9">
+			<input type="number" min="0" name="f_discount" class="form-control" placeholder="Enter discount in %" required="required">
+			</div>
+		</div>
+
+    <div class="form-group">
+      <label class="control-label col-md-3">Category:</label>
+      <div class="col-md-9">
+        <select name="f_cate" class="form-control" style="width: 100%">
+          <option value="Fast Food">Fast Food</option>
+          <option value="Drinks">Drinks</option>
+        </select>
+      </div>
+    </div>
+
+		<div class="form-group">
+			<input type="submit" name="food_submit" class="btn btn-primary" value="Submit Now">
+		</div>
+
+	</form>
+
+</center>
+</body>
+</html>
+
+<?php
+      require("../database/database.html");
+  
+
+
+if(isset($_POST['food_submit']))
+{
+
+         $food_name=$_POST['f_name'];
+         $food_price=$_POST['f_price'];
+         $food_discount=$_POST['f_discount'];
+         $category=$_POST['f_cate'];
+         $food_image_name=$_FILES['f_image']['name'];
+         $food_image_size=$_FILES['f_image']['size'];
+         $food_image_path=$_FILES['f_image']['tmp_name'];
+         $food_image_type=$_FILES['f_image']['type'];
+         $files_to_upload="../images/Drinks-Foods/".basename($food_image_name);
+         $image_path_to_save_in_database="images/Drinks-Foods/".basename($food_image_name);
+         $discounted=00;
+                  if($food_discount >=1)
+                 {
+                    $dis=($food_discount/100)*$food_price;
+                    $discounted=$food_price-$dis;
+                 }
+                 else
+                 {
+                    $discounted=$food_price;
+                 }
+
+   if(!( ($food_image_type=="image/png") or ($food_image_type=="image/jpeg") or ($food_image_type=="image/jpg")))
+   {
+   	  //header("location:upload-chinese-foods-details.html?image=nottrue");
+     echo "<script>window.open('index.html?ffd=ffd&image=nottrue','_self')</script>";
+   	  exit();
+   }
+
+      if($food_image_size > 2000000)
+   {
+   	 // header("location:upload-chinese-foods-details.html?size=nottrue");
+      echo "<script>window.open('index.html?ffd=ffd&size=nottrue','_self')</script>";
+   	  exit();
+   }
+
+   if(file_exists($files_to_upload)){
+   //	header("location:upload-chinese-foods-details.html?fileAlready=nottrue");
+     echo "<script>window.open('index.html?ffd=ffd&fileAlready=nottrue','_self')</script>";
+   	  exit();
+   }
+
+   $query="insert into fastfoodsdrinks(Name,Price,Image,Discount,Category,R_price) values('$food_name','$food_price','$image_path_to_save_in_database',' $food_discount','$category','$discounted')";
+
+
+   if((move_uploaded_file($food_image_path, $files_to_upload)) and ($con->query($query)))
+   {
+      //  header("location:upload-chinese-foods-details.html?done=done"); 
+    echo "<script>window.open('index.html?ffd=ffd&done=done','_self')</script>";
+   }
+   else
+   {
+   	 // header("location:upload-chinese-foods-details.html?notdone=notdone");
+    echo "<script>window.open('index.html?ffd=ffd&notdone=notdone','_self')</script>";
+   }
+
+  
+
+   
+}
+
+
+
+ ?>

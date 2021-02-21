@@ -1,0 +1,105 @@
+
+<?php
+require("../database/database.html");
+$edt=@$_GET['brId'];
+$query="select * from branches where ID='$edt'";
+$run=$con->query($query);
+while($row=$run->fetch_assoc())
+{
+       
+       $branch_name=$row['branch_name'];
+       $branch_add=$row['branch_address'];
+       $branch_phone=$row['branch_phone'];
+      
+
+}
+
+
+ ?>
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Branches Detail</title>
+	<script type="text/javascript" src="..\files\js\jquery-3.3.1.js"></script>
+	<script type="text/javascript" src="..\files\js\bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="..\files\css\bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="web-css.css">
+</head>
+<body class="container-fluid">
+<center>
+
+<div class="text-center" id="header" style="padding-top: 20px;margin-top: 20px;"><h3>Change data of  branch :  <?php echo $branch_name; ?> </h3></div>
+
+
+     <br>
+		<form method="post" action="branches-edit.html?brId=<?php echo $edt; ?>" class="form-horizontal" style="width: 60%" > 
+		<div class="form-group">
+      <label class="control-label col-md-3">New Branch:</label>
+      <div class="col-md-9">
+      <input type="text" name="b_name12" value="<?php echo $branch_name ?>" class="form-control" placeholder="Enter  Branch name" required="required">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label col-md-3">Branch Address:</label>
+      <div class="col-md-9">
+      <input type="text"  name="b_add12" value="<?php echo $branch_add; ?>" class="form-control" placeholder="Enter branch address" required="required">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label col-md-3">Branch Phone:</label>
+      <div class="col-md-9">
+      <input type="number"  name="b_phone12"  value="<?php echo $branch_phone; ?>" class="form-control" placeholder="Enter branch Phone" required="required">
+      </div>
+    </div>
+
+    
+    <div class="form-group">
+      <input type="submit" name="branch_submit12" class="btn btn-primary" value="Update Branch">
+    </div>
+
+  </form>
+
+</center>
+
+	</form>
+
+   
+</center>
+</body>
+</html>
+
+<?php
+      
+if(isset($_POST['branch_submit12']))
+{
+
+       $id=@$_GET['brId'];
+       $branch_name1=$_POST['b_name12'];
+       $branch_add1=$_POST['b_add12'];
+       $branch_phone1=$_POST['b_phone12'];
+      
+                  
+                
+   $query="update  branches set branch_name='$branch_name1',branch_address='$branch_add1',branch_phone='$branch_phone1' where ID='$id'";
+
+
+   if(($con->query($query)))
+   {
+       echo "<script>window.open('index.html?br=br&done=done','_self')</script>";
+   }
+   else
+   {
+      echo "<script>window.open('index.html?br=br&notdone=notdone','_self')</script>";
+   }
+
+  
+
+   
+}
+
+
+
+ ?>

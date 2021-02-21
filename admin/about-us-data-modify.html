@@ -1,0 +1,178 @@
+
+<?php
+require("../database/database.html");
+$edt=@$_GET['abid'];
+$query="select * from aboutus where ID='$edt'";
+$run=$con->query($query);
+while($row=$run->fetch_assoc())
+{
+       
+       $manager_reg=$row['ID'];
+       $manager_name=$row['Name'];
+       $manager_quali=$row['Qualification'];
+       $manager_image=$row['ImagePath'];
+       $manager_post=$row['Post'];
+       $manager_det=$row['Des'];
+       $manager_join_date=$row['JointDate'];
+}
+if(file_exists("../".$manager_image))
+{
+  unlink("../".$manager_image);
+}
+
+
+ ?>
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Edit manager information</title>
+	<script type="text/javascript" src="..\files\js\jquery-3.3.1.js"></script>
+	<script type="text/javascript" src="..\files\js\bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="..\files\css\bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="web-css.css">
+</head>
+<body class="container-fluid">
+<center>
+
+<div class="text-center" id="header" style="padding-top: 20px;margin-top: 20px;"><h3>Change data about:  <?php echo $manager_name; ?> </h3></div>
+
+
+     <br>
+		<form method="post" action="about-us-data-modify.html?abid=<?php echo $edt; ?>" class="form-horizontal" style="width: 60%" enctype="multipart/form-data"> 
+		<p style="font-size: 23px;"> You can update  manager's information in this panel.</p>
+    <div class="form-group">
+      <label class="control-label col-md-3">Manger Name:</label>
+      <div class="col-md-9">
+      <input type="text" name="m_name1" value="<?php echo $manager_name?>" class="form-control" placeholder="Enter manager name" required="required">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label col-md-3">Manger Post:</label>
+      <div class="col-md-9">
+      <input type="text"  name="m_post1" value="<?php echo $manager_post?>" class="form-control" placeholder="Enter Manger post" required="required">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label col-md-3">Manager Image:</label>
+      <div class="col-md-9">
+      <input type="file"  name="m_image1" value="<?php echo $manager_image?>" placeholder="select a photo" class="form-control" required="required">
+      <div class="help-block">
+      <?php 
+              if(@$_GET['image'])
+              {
+               echo "<p style='color:red'> Image type should be jpg,png and jpeg.</p>";
+              }
+              else if(@$_GET['size'])
+              {
+                 echo "<p style='color:red'> Image size should be less than 2mb.</p>";
+              }
+              else if(@$_GET['fileAlready'])
+              {
+                echo "<p style='color:red'> Food image already exists!</p>";
+              }
+
+
+        ?>
+        
+      </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label col-md-3">Manger Qualification:</label>
+      <div class="col-md-9">
+      <input type="text"  name="m_qualification1" value="<?php echo $manager_quali?>" class="form-control" placeholder="Enter Manger Qualification" 
+      required="required">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label col-md-3">Manger Joining Date:</label>
+      <div class="col-md-9">
+      <input type="date"  name="m_join1" value="<?php echo $manager_join_date?>" class="form-control" placeholder="Enter Manger  joining date" required="required">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label col-md-3">Describe about manager:</label>
+      <div class="col-md-9">
+      <textarea rows="10" cols="20" name="m_des1" style="width: 100%" placeholder="Please write something about manager">
+        <?php echo $manager_det;?>
+      </textarea>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <input type="submit" name="manager_submit1" class="btn btn-primary" value="Update Now">
+    </div>
+  </form>
+
+</center>
+
+	</form>
+
+   
+</center>
+</body>
+</html>
+
+<?php
+      
+if(isset($_POST['manager_submit1']))
+{
+
+         $id=@$_GET['abid'];
+         $ma_name=$_POST['m_name1'];
+         $ma_qualification=$_POST['m_qualification1'];
+         $ma_post=$_POST['m_post1'];
+         $ma_desc=$_POST['m_des1'];
+         $ma_join_date=$_POST['m_join1'];
+         $ma_img_name=$_FILES['m_image1']['name'];
+         $ma_img_size=$_FILES['m_image1']['size'];
+         $ma_img_path=$_FILES['m_image1']['tmp_name'];
+         $ma_img_type=$_FILES['m_image1']['type'];
+         $files_to_upload="../images/manager-images/".basename($ma_img_name);
+         $image_path_to_save_in_database="images/manager-images/".basename($ma_img_name);
+    
+
+   if(!( ($ma_img_type=="image/png") or ($ma_img_type=="image/jpeg") or ($ma_img_type=="image/jpg")))
+   {
+     echo "<script>window.open('about-us-data-modify.html?abid=$id&image=nottrue','_self')</script>";
+      exit();
+   }
+
+      if($ma_img_size > 2000000)
+   {
+      echo "<script>window.open('about-us-data-modify.html?abid=$id&size=nottrue','_self')</script>";
+      exit();
+   }
+
+   if(file_exists($files_to_upload)){
+    echo "<script>window.open('about-us-data-modify.html?abid=$id&fileAlready=nottrue','_self')</script>";
+      exit();
+   }
+
+   $query="update aboutus set Name='$ma_name',Qualification='$ma_qualification',Post='$ma_post',
+   Des='$ma_desc',JointDate='$ma_join_date',ImagePath='$image_path_to_save_in_database' where ID='$id'";
+
+
+   if((move_uploaded_file($ma_img_path, $files_to_upload)) and ($con->query($query)))
+   {
+       echo "<script>window.open('index.html?abo=abo&done=done','_self')</script>";
+   }
+   else
+   {
+     echo "<script>window.open('index.html?abo=abo&notdone=notdone','_self')</script>";
+   }
+
+  
+
+   
+}
+
+
+
+ ?>

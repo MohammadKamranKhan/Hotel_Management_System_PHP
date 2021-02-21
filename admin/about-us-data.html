@@ -1,0 +1,142 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>About US Data</title>
+	<script type="text/javascript" src="..\files\js\jquery-3.3.1.js"></script>
+	<script type="text/javascript" src="..\files\js\bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="..\files\css\bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="web-css.css">
+</head>
+<body class="container-fluid">
+
+
+
+
+<div class="table-responsive">
+
+<center>
+<?php
+
+
+          if(@$_GET['pass'])
+          {
+
+            echo "<br><p style='color:green; width:60%;padding:10px;background-color: #ffffcc;border:2px dashed green;'>Deleted Successfully!</p>";
+          } 
+          else if(@$_GET['fail'])
+          {
+               echo "<p style='width:60%;padding:10px; color:red;background-color:#ffffcc;border:2px dashed red;'>Could not be deleted!</p>";
+          }
+
+          if(@$_GET['done'])
+          {
+
+            echo "<br><p style='color:green; width:60%;padding:10px;background-color: #ffffcc;border:2px dashed green;'>Updated Successfully!</p>";
+          } 
+          else if(@$_GET['notdone'])
+          {
+               echo "<br><p style='width:60%;padding:10px; color:red;background-color:#ffffcc;border:2px dashed red;'>Could not be updated!</p>";
+          }
+
+
+ ?>
+
+<table class="table table-bordered table-hover" style="width: 80%;">
+
+<caption class="text-center"><h3><u>Managers Data</u></h3>
+
+</caption> 
+
+
+
+<tr>
+  <th class="text-center">Serial</th>
+  <th class="text-center">Manger ID</th>
+  <th class="text-center">Name</th>
+  <th class="text-center">Image</th>
+  <th class="text-center">Qualification</th>
+  <th class="text-center">Post</th>
+  <th class="text-center">Manager Details</th>
+  <th class="text-center">Joining Date</th>
+  <th class="text-center">Edit</th>
+  <th class="text-center">Delete</th>
+</tr>
+
+<?php
+     require("../database/database.html");
+     $query="select * from aboutus";
+     $run=$con->query($query);
+     $count=0;
+     while($row=$run->fetch_assoc())
+     {
+       $count++;
+       $manager_reg=$row['ID'];
+       $manager_name=$row['Name'];
+       $manager_quali=$row['Qualification'];
+       $manager_image=$row['ImagePath'];
+       $manager_post=$row['Post'];
+       $manager_det=substr($row['Des'],0,40);
+       $manager_join_date=$row['JointDate'];
+       
+      
+
+ ?>
+
+
+
+<tr class="text-center">
+  <td><?php echo $count; ?></td>
+  <td><?php echo $manager_reg;  ?></td>
+  <td><?php echo $manager_name;  ?></td>
+  <td><img src="<?php echo '../'.$manager_image; ?>" width="80" height="80" alt="<?php echo $manager_name; ?> " title="<?php echo $manager_name; ?>"></td>
+  <td><?php echo $manager_quali;  ?></td>
+   <td><?php echo $manager_post;  ?></td>
+    <td><?php echo $manager_det." ....";  ?></td>
+    <td><?php echo $manager_join_date;  ?></td>
+  <td><?php echo "<a href='about-us-data-modify.html?abid=$manager_reg' class='btn btn-primary' style='width:70px;'>Edit</a> "; ?></td>
+  <td><?php echo "<a href='index.html?abo=abo&delin=$manager_reg' class='btn btn-primary' style='width:70px;'>Delete</a> "; ?></td>
+</tr>
+  <?php  } ?>
+
+</table>
+</center>
+</div>
+
+</body>
+</html>
+
+<?php 
+
+
+     if(isset($_GET['delin']) )
+  {
+
+         $id=@$_GET['delin'];
+         $query="select * from aboutus where ID='$id'";
+         $run=$con->query($query);
+       
+        while($row=$run->fetch_assoc())
+         {
+          
+           $food_image=$row['ImagePath'];
+
+          }      
+              
+              $query="delete from aboutus where ID='$id'";
+              if($con->query($query) and unlink("../".$food_image))
+              {
+                 echo "<script>window.open('index.html?abo=abo&pass=pass','_self')</script>";
+              }
+              else
+              {
+                echo "<script>window.open('index.html?abo=abo&fail=fail','_self')</script>";
+              }
+            
+    }
+
+
+
+?>
+

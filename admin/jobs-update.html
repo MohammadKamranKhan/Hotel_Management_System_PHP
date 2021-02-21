@@ -1,0 +1,140 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Jobs update</title>
+	<script type="text/javascript" src="..\files\js\jquery-3.3.1.js"></script>
+	<script type="text/javascript" src="..\files\js\bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="..\files\css\bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="web-css.css">
+</head>
+<body class="container-fluid">
+<center>
+     <br>
+	
+	<form method="post" action="" class="form-horizontal" style="width: 60%" enctype="multipart/form-data"> 
+		   <?php  
+          if(@$_GET['done'])
+          {
+            echo "<p style='color:green; width:60%;padding:10px;background-color: #ffffcc;border:2px dashed green;'>All Files and data uploded successfully!</p>";
+          } 
+          else if(@$_GET['notdone'])
+          {
+               echo "<p style='width:60%;padding:10px; color:red;background-color:#ffffcc;border:2px dashed red;'>All Files and data failed to upload!</p>";
+          }
+     ?>
+
+ <div class="form-group">
+      <label class="control-label col-md-3">Department:</label>
+      <div class="col-md-9">
+      <input type="text"  name="dept" class="form-control" placeholder="Enter Department name" required="required">
+      </div>
+    </div>
+
+		<div class="form-group">
+			<label class="control-label col-md-3">Job type:</label>
+			<div class="col-md-9">
+			<input type="text" name="j_type" class="form-control" placeholder="Enter Job type" required="required">
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="control-label col-md-3">Eligiblity Criteria:</label>
+			<div class="col-md-9">
+			<textarea class="form-control" placeholder="Enter Eligiblity Criteria" required="required" name="j_cri" style="resize: none; width: 100%;" rows="6">
+        
+      </textarea>
+      
+			</div>
+		</div>
+
+    <div class="form-group">
+      <label class="control-label col-md-3">Salary Package:</label>
+      <div class="col-md-9">
+      <input type="number" min="1000" max="1500000" name="s_package" class="form-control" placeholder="1000-1500000" required="required">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label col-md-3">Experience:</label>
+      <div class="col-md-9">
+      <input type="text"  name="experience" class="form-control" placeholder="Minimum experience" required="required">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label col-md-3">Starting date:</label>
+      <div class="col-md-9">
+      <input type="date"  name="s_date" class="form-control" placeholder="e.g 20-09-208" required="required">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label col-md-3">Last date:</label>
+      <div class="col-md-9">
+      <input type="date"  name="l_date" class="form-control" placeholder="e.g 20-09-208" required="required">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label col-md-3">Job Vacancy:</label>
+      <div class="col-md-9">
+      <select class="form-control" name="j_vacancy" >
+        <option value="Available">Available</option>
+         <option value="Not Available">Not Available</option>
+      </select>
+      </div>
+    </div>
+
+		
+		<div class="form-group">
+			<input type="submit" name="job_submit" class="btn btn-primary" value="Add new Job">
+		</div>
+
+	</form>
+
+</center>
+</body>
+</html>
+
+<?php
+    
+require("../database/database.html");
+
+if(isset($_POST['job_submit']))
+{
+
+
+    $dept=$_POST['dept'];       
+    $j_type=$_POST['j_type'];
+    $eli_cri=$_POST['j_cri'];
+    $sal_package=$_POST['s_package'];
+    $experience=$_POST['experience'];
+    $sta_date=$_POST['s_date'];
+    $fin_date=$_POST['l_date'];
+    $Vacancy=$_POST['j_vacancy'];
+
+
+
+
+   $query="insert into jobs(Department,Job_type,Elig_cri,Salary_pack,Experience,Starting_date,Last_date,Job_status) values('$dept','$j_type','$eli_cri','$sal_package','$experience','$sta_date','$fin_date','$Vacancy')";
+
+
+   if($con->query($query))
+   {
+       echo "<script>window.open('index.html?jbs=jbs&done=done','_self')</script>";
+   }
+   else
+   {
+   	 echo "<script>window.open('index.html?jbs=jbs&notdone=notdone','_self')</script>";
+   }
+
+
+  
+
+   
+}
+
+
+
+ ?>

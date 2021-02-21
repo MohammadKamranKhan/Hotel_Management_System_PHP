@@ -1,0 +1,133 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Fast Foods Details</title>
+	<script type="text/javascript" src="..\files\js\jquery-3.3.1.js"></script>
+	<script type="text/javascript" src="..\files\js\bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="..\files\css\bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="web-css.css">
+</head>
+<body class="container-fluid">
+
+
+
+
+<div class="table-responsive">
+
+<center>
+<br>
+
+<?php
+
+
+          if(@$_GET['pass'])
+          {
+
+            echo "<br><p style='color:green; width:60%;padding:10px;background-color: #ffffcc;border:2px dashed green;'>Deleted Successfully!</p>";
+          } 
+          else if(@$_GET['fail'])
+          {
+               echo "<p style='width:60%;padding:10px; color:red;background-color:#ffffcc;border:2px dashed red;'>Could not be deleted!</p>";
+          }
+
+          if(@$_GET['done'])
+          {
+
+            echo "<br><p style='color:green; width:60%;padding:10px;background-color: #ffffcc;border:2px dashed green;'>Updated Successfully!</p>";
+          } 
+          else if(@$_GET['notdone'])
+          {
+               echo "<br><p style='width:60%;padding:10px; color:red;background-color:#ffffcc;border:2px dashed red;'>Could not be deleted!</p>";
+          }
+
+
+ ?>
+
+<table class="table table-bordered table-hover" style="width: 80%;">
+<caption class="text-center"><h3><u>Fast Foods + Drinks</u></h3></caption> 
+<tr>
+  <th class="text-center">ID</th>
+  <th class="text-center">Name</th>
+  <th class="text-center">Image</th>
+  <th class="text-center">Price</th>
+  <th class="text-center">Discount</th>
+  <th class="text-center">Real Price</th>
+  <th class="text-center">Edit</th>
+  <th class="text-center">Delete</th>
+</tr>
+
+<?php
+     require("../database/database.html");
+     $query="select * from fastfoodsdrinks";
+     $run=$con->query($query);
+     $count=0;
+     while($row=$run->fetch_assoc())
+     {
+       $count++;
+       $food_id=$row['ID'];
+       $food_price=$row['Price'];
+       $food_image=$row['Image'];
+       $food_discount=$row['Discount'];
+       $food_name=$row['Name'];
+      
+
+ ?>
+
+<?p
+
+<tr class="text-center">
+  <td><?php echo $count; ?></td>
+  <td><?php echo $food_name;  ?></td>
+  <td><img src="<?php echo '../'.$food_image;  ?>" alt="<?php echo $food_name;  ?>" width="80" height="40"></td>
+  <td><?php echo $food_price;  ?></td>
+  <td><?php echo $food_discount;  ?></td>w
+  <td><?php echo $food_price;  ?></td>
+  <td><?php echo "<a href='fast-foods-edit.html?edt=$food_id' class='btn btn-primary' style='width:70px;'>Edit</a> "; ?></td>
+  <td><?php echo "<a href='index.html?ff=ff&delin=$food_id' class='btn btn-primary' style='width:70px;'>Delete</a> "; ?></td>
+</tr>
+  <?php  } ?>
+
+</table>
+</center>
+</div>
+
+</body>
+</html>
+
+<?php 
+
+
+     if(isset($_GET['delin']) )
+  {
+
+         $id=@$_GET['delin'];
+         $query="select * from fastfoodsdrinks where ID='$id'";
+         $run=$con->query($query);
+       
+        while($row=$run->fetch_assoc())
+         {
+          
+           $food_image=$row['Image'];
+
+          }      
+              
+              $query="delete from fastfoodsdrinks where ID='$id'";
+              if($con->query($query) and unlink("../".$food_image))
+              {
+                 echo "<script>window.open('index.html?ff=ff&pass=pass','_self')</script>";
+              }
+              else
+              {
+                echo "<script>window.open('index.html?ff=ff&fail=fail','_self')</script>";
+              }
+            
+    }
+
+
+
+?>
+
+
+

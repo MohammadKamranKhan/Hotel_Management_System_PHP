@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Jobs at FoodPoint</title>
+	<script type="text/javascript" src="files\js\jquery-3.3.1.js"></script>
+	<script type="text/javascript" src="files\js\bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="files\css\bootstrap.min.css">
+   <link rel="icon" type="text/css" href="images\others\favicon.png">
+	
+	<link rel="stylesheet" type="text/css" href="web-css.css">
+</head>
+<body class="container-fluid">
+         
+     <br>
+     <!-- carousel -->    
+     <div class="header"> <?php require("carousel.html"); ?> </div> 
+     <!-- making navigation system in bootstrap -->
+     <div><?php require("navigation.html"); ?></div>
+     <!--  dividing main ( 9 column) and sidebar(right 3 column) -->
+     <div class="container-fluid">
+     <div class="row">
+     	<div class="col-md-9 main" style="font-size: 14px;">
+     	<center>
+      <h3>Different Job Oppurtunities @ foodPoint</h3>
+      <br>
+      <img src="images/others/job2-foodpoint.jpg" alt="jobs at foodpoint" title="jobs at foodpoint" width="100%" height="400" style="margin-bottom: 30px;">	
+      <br>
+      <p></p>
+      <p class="text-justfy">
+           First of all, we welcome to the family of foodpoint. Here, you will see every facility as member of foodpoint. There are different jobs currently available in our family. These jobs have different Criteria. This can be changed according to time. You job work is to work hard with honesty. You will get more fruitful results. If job vacancy is <b>available</b> then it will have link of <b> Apply now </b>.You can not apply for jobs having status <b style="color: red;"> No vacancy!</b>. Moreever, you can learn from newspaper about jobs. You can also visit our following platforms:
+           <br>
+           Facebook Page: <a href="#">www.facebook.com/foodPoint</a>
+           <br>
+          Email Address: <a href="#">info@foodpoint.com</a>
+      </p>
+      <br>
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+        <tr>
+          <th>Department</th>
+          <th>Job Type</th>
+          <th>Eligibility Criteria</th>
+          <th>Salary Package</th>
+          <th>Experience</th>
+          <th>Starting Date</th>
+          <th>Last Date</th>
+          <th>Status</th>
+          </tr>
+        <?php 
+          require("database/database.html");
+          $query="select * from jobs";
+          $run=$con->query($query);
+          if($run->num_rows ==0)
+          {
+            echo "<h3> So Sorry! we have no jobs available yet!</h3>";
+          }
+          else
+          {
+          while($row=$run->fetch_assoc())
+          {
+             $job_t=$row['Job_type'];
+             $id=$row['ID'];
+             $sta=$row['Job_status'];
+             if($sta=="Available" or $sta=="available")
+             {
+              $status="<a href='apply-now.html?jobt=$job_t'>Apply Now</a>";
+             }
+             else
+             {
+              $status="<b style='color:red'>No Vacancy</b>";
+             }
+
+
+
+
+            ?>
+
+        
+          
+          <tr class="text-center" colspan="2">
+            <td><?php echo $row['Department']; ?></td>
+            <td><?php echo $row['Job_type']; ?></td>
+            <td><?php echo $row['Elig_cri']; ?></td>
+            <td><?php echo $row['Salary_pack']." PKR"; ?></td>
+            <td><?php echo $row['Experience']; ?></td>
+            <td><?php echo $row['Starting_date']; ?></td>
+            <td><?php echo $row['Last_date']; ?></td>
+           
+            <td><?php echo $status; ?></td>
+          </tr>
+          
+           
+
+           <?php }} ?>
+        </table>
+      </div>
+       </center>
+
+     	</div>
+     	<!-- ending main  -->
+     	<div class="col-md-3">
+        <?php  require("sidebar.html"); ?>
+      </div>
+
+     </div>
+     </div>
+
+     <br>
+     <div class="foot">
+          <br>
+     	<?php echo " <center>Copy rights &copy reserved ".date("Y")."</center>"; require("footer.html");
+      
+       ?>
+     </div>
+
+
+
+</body>
+</html>

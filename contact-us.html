@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Contact US</title>
+  <script type="text/javascript" src="files\js\jquery-3.3.1.js"></script>
+  <script type="text/javascript" src="files\js\bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="files\css\bootstrap.min.css">
+   <link rel="icon" type="text/css" href="images\others\favicon.png">
+  <link rel="stylesheet" type="text/css" href="web-css.css">
+</head>
+<body class="container-fluid">
+         
+     <br>
+     <!-- carousel -->    
+     <div class="header"> <?php require("carousel.html"); ?> </div> 
+     <!-- making navigation system in bootstrap -->
+     <div><?php require("navigation.html"); ?></div>
+
+     <!--  dividing main ( 9 column) and sidebar(right 3 column) -->
+     <div class="container-fluid">
+     <div class="row">
+      <div class="col-md-9 main">
+    
+
+       <h3>Contact US</h3>
+       <p class="text-justify">
+         Please give your suggestions or feedback. We respect our customers and also their feedbacks. You are free here to talk with us. Fill out form and send to us. We will pay attention to your views and commments. Thanks!
+       </p>
+       
+        <?php
+          
+          if(@$_GET['done'])
+          {
+
+            echo "<br><p style='color:green; width:60%;padding:10px;background-color: #ffffcc;border:2px dashed green;text-align:center;'>Thank you so much for your feedback!</p>";
+          } 
+          else if(@$_GET['notdone'])
+          {
+               echo "<br><p style='width:60%;padding:10px; color:red;background-color:#ffffcc;border:2px dashed red;text-align:center;'>Your message could not be sent.</p>";
+          }
+
+
+
+           ?>
+
+      <form style="width: 60%" method="post" action="contact-us.html" class="form-horizontal">
+        <div class="form-group">
+          <label class="col-md-3 ">First Name: </label>
+          <div class="col-md-10">
+              <input type="text" name="u_name" placeholder="Please Enter you first name here" class="form-control"  style="width: 100%;" required="required">
+          </div>
+        </div>
+         
+         
+        <div class="form-group">
+          <label class="col-md-3 ">Last Name: </label>
+          <div class="col-md-10">
+       <input type="text" name="u_second" placeholder="Please Enter you last name here" class="form-control" style="width: 100%;" required="required">
+          </div>
+         </div>
+        
+    
+        <div class="form-group">
+          <label class="col-md-3 ">Your Email: </label>
+          <div class="col-md-10" >
+       <input type="email" name="u_email" placeholder="Please Enter email" class="form-control" style="width: 100%;" required="required">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-md-4">Your Message:</label>
+          <div class="col-md-10">
+          <textarea rows="10" " name="u_mess" style="width:100%;resize: none;" placeholder="Enter your message" class="form-control"></textarea>
+          </div>
+        </div>
+
+         
+          <input type="submit" name="b_sub" class="btn btn-primary" value="Send Message">
+          <br><br>
+       
+
+
+      </form>     
+ 
+      
+      </div>
+      <!-- ending main  -->
+      <div class="col-md-3">
+        <?php require("sidebar.html"); ?>
+      </div>
+
+     </div>
+     </div>
+
+     <br>
+     <div class="foot">
+          <br>
+      <?php echo " <center>Copy rights &copy reserved ".date("Y")."</center>"; require("footer.html"); ?>
+     </div>
+
+
+
+</body>
+</html>
+<?php
+
+if(isset($_POST['b_sub']))
+{
+  $user_first_name=$_POST['u_name'];
+  $user_last_name=$_POST['u_second'];
+  $user_email=$_POST['u_email'];
+  $user_message=$_POST['u_mess'];
+
+
+  
+require 'phpmailer/PHPMailerAutoload.php';
+require('mail.php');
+
+$mail = new PHPMailer;
+
+
+//$mail->SMTPDebug = 3;                               // Enable verbose debug output
+
+$mail->isSMTP();                                      // Set mailer to use SMTP
+$mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
+$mail->SMTPAuth = true;                               // Enable SMTP authentication
+$mail->Username = Email;                 // SMTP username
+$mail->Password = Password;                           // SMTP password
+$mail->SMTPSecure = 'ssl';                            // Enable TLS encryption, `ssl` also accepted
+$mail->Port = 465;                                    // TCP port to connect to
+
+$mail->setFrom(Email, 'FoodPoint');
+$mail->addAddress($user_email, 'FoodPoint'); 
+$mail->addAddress(Email, 'FoodPoint');     // Add a recipient
+
+$mail->isHTML(true);                                  // Set email format to HTML
+
+$mail->Subject = 'You have a new feedback from  '.$user_first_name.'-'.$user_last_name;
+$mail->Body    = '<br> You have a new message from the user  '.$user_first_name. ' User information : <br>
+
+user first name : <b> '.$user_first_name.' </b><br>
+user last name: <b> '.$user_last_name.' </b><br>
+user email: <b> '.$user_email.' </b><br>
+user message: <b> '.$user_message.' </b><br>
+
+
+';
+// $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+/*
+if(!$mail->send()) {
+    echo 'Message could not be sent.';
+    echo 'Mailer Error: ' . $mail->ErrorInfo;
+} else {
+    echo 'Message has been sent';
+}
+*/
+
+if($mail->send())
+  {
+       echo "<script>window.open('contact-us.html?done=done','_self')</script>";
+  }
+  else
+  {
+     echo "<script>window.open('contact-us.html?&notdone=notdone','_self')</script>";
+  }
+
+}
+
+
+
+ ?>

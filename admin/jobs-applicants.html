@@ -1,0 +1,173 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Jobs applicants</title>
+  <script type="text/javascript" src="..\files\js\jquery-3.3.1.js"></script>
+  <script type="text/javascript" src="..\files\js\bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="..\files\css\bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="web-css.css">
+</head>
+<body class="container-fluid">
+
+
+
+
+<div class="table-responsive">
+
+<center>
+
+
+<?php
+
+
+          if(@$_GET['pass'])
+          {
+
+            echo "<br><p style='color:green; width:60%;padding:10px;background-color: #ffffcc;border:2px dashed green;'>Deleted all records Successfully!</p>";
+          } 
+          else if(@$_GET['fail'])
+          {
+               echo "<p style='width:60%;padding:10px; color:red;background-color:#ffffcc;border:2px dashed red;'>Could not be deleted even single record!</p>";
+          }
+
+          if(@$_GET['pass1'])
+          {
+
+            echo "<br><p style='color:green; width:60%;padding:10px;background-color: #ffffcc;border:2px dashed green;'>Deleted Successfully!</p>";
+          } 
+          else if(@$_GET['fail1'])
+          {
+               echo "<p style='width:60%;padding:10px; color:red;background-color:#ffffcc;border:2px dashed red;'>Could not be deleted!</p>";
+          }
+
+          if(@$_GET['done'])
+          {
+
+            echo "<br><p style='color:green; width:60%;padding:10px;background-color: #ffffcc;border:2px dashed green;'>Updated Successfully!</p>";
+          } 
+          else if(@$_GET['notdone'])
+          {
+               echo "<br><p style='width:60%;padding:10px; color:red;background-color:#ffffcc;border:2px dashed red;'>Could not be updated!</p>";
+          }
+
+          
+
+ ?>
+
+<table class="table table-bordered table-hover" style="width: 80%;">
+
+<caption ><h3 class="text-center"><u>Job Applicants Data</u></h3>
+<a href="index.html?jbc=jbc&del=all" class="btn btn-primary"  >Delete All rejected candidates</a>
+</caption> 
+
+
+<tr>
+  <th class="text-center">Applicant#</th>
+  <th class="text-center">ID</th>
+   <th class="text-center">Job type</th>
+  <th class="text-center">Applicant Name</th>
+  <th class="text-center">Applicant Email</th>
+    <th class="text-center">Applicant image</th>
+     <th class="text-center">Status</th>
+      <th class="text-center">Change Status</th>
+     <th class="text-center">Veiw All Data</th>
+  <th class="text-center">Delete</th>
+</tr>
+
+<?php
+     require("../database/database.html");
+     $query="select * from jobcandidate order by ID desc";
+     $run=$con->query($query);
+     $count=0;
+     while($row=$run->fetch_assoc())
+     {
+      $count++;
+      $id=$row['ID'];
+      $name=$row['fullname'];
+      $email=$row['email'];
+      //$cnic=$row['cnic'];
+      //$contact=$row['contact'];
+      //$qulification=$row['qualification'];
+      //$address=$row['address'];
+      //$skills=$row['skills'];
+      $image=$row['image'];
+      $jobtype=$row['jobtype'];
+      $status=$row['status'];
+
+ ?>
+
+
+
+<tr class="text-center">
+  <td><?php echo $count; ?></td>
+  <td><?php echo $id; ?></td>
+  <td><?php echo $jobtype; ?></td>
+  <td><?php echo $name; ?></td>
+  <td><?php echo $email; ?></td>
+ 
+  <td><img src="<?php echo '../'.$image; ?>" style="height:50px; width:100%;"></td>
+  <td><?php echo $status; ?></td>
+  <td><?php echo "<a href='change-applicants.html?id=$id' class='btn btn-primary' '>Change</a> "; ?></td>
+  <td><?php echo "<a href='view-applicants.html?id=$id' class='btn btn-primary' style='width:70px;'>View </a> "; ?></td> 
+  <td><?php echo "<a href='index.html?jbc=jbc&delsingle=$id' class='btn btn-primary' style='width:70px;'>Delete</a> "; ?></td>
+</tr>
+  <?php  } ?>
+
+</table>
+</center>
+</div>
+
+</body>
+</html>
+
+<?php 
+
+
+     if(isset($_GET['delsingle']) )
+  {
+
+         $id=@$_GET['delsingle'];
+               $query2="select image from jobcandidate where ID='$id'";
+               $run=$con->query($query2);
+               while($row=$run->fetch_assoc())
+                {
+                   $image_path=$row['image'];
+                }
+                $unlink_image="../".$image_path;
+
+
+
+              $query="delete from jobcandidate where ID='$id'";
+              if($con->query($query) and unlink($unlink_image))
+              {
+                 echo "<script>window.open('index.html?jbc=jbc&pass1=pass','_self')</script>";
+              }
+              else
+              {
+                echo "<script>window.open('index.html?jbc=jbc&fail1=fail','_self')</script>";
+              }
+            
+    }
+
+    if(isset($_GET['del']) )
+  {
+
+         
+          
+              $query="delete from jobcandidate where status='rejected'";
+              if($con->query($query))
+              {
+                 echo "<script>window.open('index.html?jbc=jbc&pass=pass','_self')</script>";
+              }
+              else
+              {
+                echo "<script>window.open('index.html?jbc=jbc&fail=fail','_self')</script>";
+              }
+            
+    }
+
+
+
+?>

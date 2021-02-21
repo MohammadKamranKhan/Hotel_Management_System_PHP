@@ -1,0 +1,129 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Caro Images</title>
+	<script type="text/javascript" src="..\files\js\jquery-3.3.1.js"></script>
+	<script type="text/javascript" src="..\files\js\bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="..\files\css\bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="web-css.css">
+</head>
+<body class="container-fluid">
+
+
+
+
+<div class="table-responsive">
+
+<center>
+
+
+<?php
+
+
+          if(@$_GET['pass'])
+          {
+
+            echo "<br><p style='color:green; width:60%;padding:10px;background-color: #ffffcc;border:2px dashed green;'>Deleted Successfully!</p>";
+          } 
+          else if(@$_GET['fail'])
+          {
+               echo "<p style='width:60%;padding:10px; color:red;background-color:#ffffcc;border:2px dashed red;'>Could not be deleted!</p>";
+          }
+
+          if(@$_GET['done'])
+          {
+
+            echo "<br><p style='color:green; width:60%;padding:10px;background-color: #ffffcc;border:2px dashed green;'>Updated Successfully!</p>";
+          } 
+          else if(@$_GET['notdone'])
+          {
+               echo "<br><p style='width:60%;padding:10px; color:red;background-color:#ffffcc;border:2px dashed red;'>Could not be updated!</p>";
+          }
+
+
+ ?>
+
+<table class="table table-bordered table-hover" style="width: 80%;">
+<caption class="text-center"><h3><u>Carousel Images</u></h3>
+<p>6 random images will be displayed on carousel bar.</p>
+</caption> 
+
+
+
+
+<tr>
+  <th class="text-center">ID</th>
+  <th class="text-center">Image Name</th>
+  <th class="text-center">Image Path</th>
+
+  <th class="text-center">Delete</th>
+</tr>
+
+<?php
+     require("../database/database.html");
+     $query="select * from carousel";
+     $run=$con->query($query);
+     $count=0;
+     while($row=$run->fetch_assoc())
+     {
+      $count++;
+       $caro_id=$row['ID'];
+       $caro_name=$row['imageName'];
+       $caro_path=$row['imagePath'];
+      
+      
+
+ ?>
+
+
+
+<tr class="text-center">
+  
+
+  <td><?php echo $count; ?></td>
+  <td><?php echo $caro_name;  ?></td>
+  <td><img src="<?php echo '../'.$caro_path;?>" title="<?php echo $caro_name;?>" alt="<?php echo $caro_name;?>" style="width: 50%;height: 90px;"></td>
+   
+  <td><?php echo "<a href='index.html?imageCaro1=imageCaro1&id=$caro_id' class='btn btn-primary' style='width:70px;'>Delete</a> "; ?></td>
+</tr>
+  <?php  } ?>
+
+</table>
+</center>
+</div>
+
+</body>
+</html>
+
+<?php 
+
+
+     if(isset($_GET['id']) )
+  {
+
+         $id=@$_GET['id'];
+         $query1="select * from carousel where ID='$id'";
+         $rin=$con->query($query1);
+         while($row=$rin->fetch_assoc())
+         {
+            $image_path=$row['imagePath'];
+         }
+          
+              $query="delete from carousel where ID='$id'";
+
+              if($con->query($query) and unlink("../".$image_path))
+              {
+                 echo "<script>window.open('index.html?imageCaro1=imageCaro1&pass=pass','_self')</script>";
+              }
+              else
+              {
+                echo "<script>window.open('index.html?imageCaro1=imageCaro1&fail=fail','_self')</script>";
+              }
+            
+    }
+
+
+
+?>

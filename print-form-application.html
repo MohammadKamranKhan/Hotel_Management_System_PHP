@@ -1,0 +1,116 @@
+<?php
+require("database/database.html");
+$name=@$_GET['cnic'];
+$query="select * from jobcandidate where cnic='$name'";
+$run=$con->query($query);
+while($row=$run->fetch_assoc())
+{
+          $id=$row['ID'];
+          $fullname=$row['fullname'];
+          $email=$row['email'];
+          $cnic=$row['cnic'];
+          $phone=$row['contact'];
+          $qulification=$row['qualification'];
+          $address=$row['address'];
+          $skills=$row['skills'];
+          $jobtype=$row['jobtype'];
+          $image=$row['image'];
+          $contact1=substr($phone, 0,4)."-";
+       $contact2=substr($phone, 4);
+       $complete_contact=$contact1.$contact2;
+}
+
+ ?>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Print form application</title>
+    <script type="text/javascript" src="files\js\jquery-3.3.1.js"></script>
+	<script type="text/javascript" src="files\js\bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css" href="files\css\bootstrap.min.css">
+ <link rel="icon" type="text/css" href="images\others\favicon.png">
+<script type="text/javascript"> 
+	function printMe()
+	{
+       window.print();
+   	}
+</script>
+</head>
+<body>
+
+<h3 class="text-center"><u>FoodPoint Rollno Slip</u></h3>
+<div class="row">
+<div class="col-md-5"></div>
+<div class="col-md-4">
+<img src="<?php echo $image ?>"  style="width: 200px; height: 180px;" alt="<?php  echo $fullname?>" title="<?php  echo $fullname?>">  
+</div>
+
+
+
+
+<center>
+<br><br><br>
+<div class="table-reponsive">
+  <table class="table table-bordered" style="width: 30%;">
+  <caption class="text-center"><h3>Applicant Details</h3></caption>
+   
+   <tr>
+      <td align="right"><b>Application#</b></td>
+      <td ><?php echo $id; ?></td>
+    </tr>
+
+  <tr>
+      <td align="right"><b>Job Type</b></td>
+      <td ><?php echo $jobtype; ?></td>
+    </tr>
+    <tr>
+      <td align="right"><b>Full Name</b></td>
+      <td><?php echo $fullname; ?></td>
+    </tr>
+    <tr>
+      <td align="right"><b>Email</b></td>
+      <td ><?php echo $email; ?></td>
+    </tr>
+    <tr>
+      <td align="right"><b>Contact</b></td>
+      <td ><?php echo $complete_contact; ?></td>
+    </tr>
+    <tr>
+      <td align="right"><b>CNIC</b></td>
+      <td ><?php echo $cnic; ?></td>
+    </tr>
+    <tr>
+      <td align="right"><b>Qualification</b></td>
+      <td ><?php echo $qulification; ?></td>
+    </tr>
+    <tr>
+      <td align="right"><b>Address</b></td>
+      <td ><?php echo $address; ?></td>
+    </tr>
+    <tr>
+      <td align="right"><b>Skills</b></td>
+      <td ><?php echo $skills; ?></td>
+    </tr>
+      </table>
+
+
+
+       <a class="btn btn-default" href="print-form-application.html?cnic=<?php echo $cnic;?>" onclick="window.print()">Print Form</a>
+
+       <p>
+         
+       <p><b>Note:</b> Please bring on orignal  documents along with roll no slip. The interview date will be informed  you via mobile phone.</p>
+       </p>
+
+</div>
+</center>
+
+
+
+
+
+
+
+</div>
+</body>
+</html>

@@ -1,0 +1,130 @@
+
+ <?php
+  require("database/database.html");
+  $image_name1;
+  $image_path1;
+  $image_name2;
+  $image_path2;
+  $image_name3;
+  $image_path3;
+  $image_name4;
+  $image_path4;
+  $image_name5;
+  $image_path5;
+  $image_name6;
+  $image_path6;
+  
+  // getting one image randomly
+  $query1="select * from carousel  order by rand() limit 1";
+  $rn1=$con->query($query1);
+  while($row=$rn1->fetch_assoc())
+  {
+     $image_name1=$row['imageName'];
+     $image_path1=$row['imagePath'];
+  }
+
+// getting one image randomly
+  $query2="select * from carousel  order by rand()   limit 1";
+  $rn2=$con->query($query2);
+  while($row=$rn2->fetch_assoc())
+  {
+     $image_name2=$row['imageName'];
+     $image_path2=$row['imagePath'];
+  }
+
+
+// getting one image randomly
+  $query3="select * from carousel order by rand()  limit 1 ";
+  $rn3=$con->query($query3);
+  while($row=$rn3->fetch_assoc())
+  {
+     $image_name3=$row['imageName'];
+     $image_path3=$row['imagePath'];
+  }
+
+
+// getting one image randomly
+  $query4="select * from carousel  order by rand()  limit 1";
+  $rn4=$con->query($query4);
+  while($row=$rn4->fetch_assoc())
+  {
+     $image_name4=$row['imageName'];
+     $image_path4=$row['imagePath'];
+  }
+
+
+// getting 5 image randomly
+  $query5="select * from carousel order by rand()  limit 1 ";
+  $rn5=$con->query($query5);
+  while($row=$rn5->fetch_assoc())
+  {
+     $image_name5=$row['imageName'];
+     $image_path5=$row['imagePath'];
+  }
+
+
+// getting 6 image randomly
+  $query6="select * from carousel   order by rand() limit 1";
+  $rn6=$con->query($query6);
+  while($row=$rn6->fetch_assoc())
+  {
+     $image_name6=$row['imageName'];
+     $image_path6=$row['imagePath'];
+  }
+
+
+  ?>
+
+  
+
+
+<div class="carousel slide" data-ride="carousel" id="myFood" style="width: 100%;height:350px;">
+     		<!-- indicators  -->
+     		<ol class="carousel-indicators">
+     			<li data-target="#myFood" data-slide-to="1" class="active"></li>
+     			<li data-target="#myFood" data-slide-to="2" ></li>
+     			<li data-target="#myFood" data-slide-to="3" ></li>
+     			<li data-target="#myFood" data-slide-to="4" ></li>
+     			<li data-target="#myFood" data-slide-to="5" ></li>
+     			<li data-target="#myFood" data-slide-to="6" ></li>
+     		</ol>
+
+     		 <!-- all images to be shown -->
+          <div class="carousel-inner" >
+          	
+          	<div class="item active">
+          		<img src="<?php echo $image_path1 ?>" alt="<?php echo $image_name1?>"  title="<?php echo $image_name1?>"    style="width: 100%;height: 350px;">
+          	</div>
+
+          	<div class="item">
+          		<img src="<?php echo $image_path2 ?>" alt="<?php echo $image_name2?>"  title="<?php echo $image_name2?>"  style="width: 100%;height: 350px;">
+          	</div>
+
+          	<div class="item">
+          		<img src="<?php echo $image_path3 ?>" alt="<?php echo $image_name3?>"  title="<?php echo $image_name2?>"   style="width: 100%;height: 350px;">
+          	</div>
+
+          	<div class="item">
+          		<img src="<?php echo $image_path4 ?>" alt="<?php echo $image_name4?>"  title="<?php echo $image_name3?>"   style="width: 100%;height: 350px;">
+          	</div>
+
+          	<div class="item">
+          		<img src="<?php echo $image_path5 ?>" alt="<?php echo $image_name5?>" title="<?php echo $image_name5?>"     style="width: 100%;height: 350px;">
+          	</div>
+
+          	<div class="item">
+          		<img src="<?php echo $image_path6 ?>" alt="<?php echo $image_name6?>" title="<?php echo $image_name6?>"    style="width: 100%;height: 350px;">
+          	</div>
+
+          </div>
+
+          <a class="left carousel-control" href="#myFood" data-slide="prev">
+              <span class="glyphicon glyphicon-chevron-left"></span>
+              <span class="sr-only">Previous</span>
+          </a>
+          <a class="right carousel-control" href="#myFood" data-slide="next">
+           <span class="glyphicon glyphicon-chevron-right"></span>
+            <span class="sr-only">Next</span>
+          </a>
+
+     </div>

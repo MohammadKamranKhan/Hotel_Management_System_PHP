@@ -1,0 +1,47 @@
+.header{width: 100%; height: 360px;}
+
+.ka{background-color: white;margin:6px 0; width: 25px;height:2px;}
+
+
+
+.navbar-nav li a{font-size: 18px;color: white;}
+
+.navbar-nav li a:hover{background-color: black;color: white;}
+
+.pata-ni{background-color: green;color:white;}
+
+.icon-bar-sign{width: 25px;height: 3px; background-color: white;margin:6px 0px;}
+
+.dropdown-menu li a{margin-left: 0px; background-color: white;color: black;}
+.dropdown-menu li a:hover{background-color: green;color: white;clear: both;}
+
+.sidebar{ height: 800px;color: black; clear: both;}
+.sidebar p,h4{color: black;}
+
+.foot{font-size: 16px;height: 150px;width: 100%; background-color: black;color: white;clear: both; padding:10px;}
+
+.footerLinks a{text-decoration: none; color: white; }
+
+.footerLinks a:hover{color: red;}
+
+body{background-color: orange;}
+
+.main{font-family: verdana; font-size: 16px; text-align: justify;clear: both;}
+
+.text-well{background-color: green; color: white;width: 100%;height: 200px;}
+
+.myOwnClass{background-color: green;}
+
+#header{height: 400px;background-color: black;width: 100%;clear: both;}
+
+.first-one{margin-left: 150px;clear: both;}
+
+.navbar-header a {color: white;}
+
+.navbar-brand img{margin-top: -17px;margin-left: -5px}
+
+@media screen and (max-width: 768px)
+{
+	.first-one{margin-left: 0px;clear: both;}
+	.navbar-brand{margin-top: 10px;}
+}

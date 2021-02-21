@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>FoodPoint</title>
+	<script type="text/javascript" src="files\js\jquery-3.3.1.js"></script>
+	<script type="text/javascript" src="files\js\bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="files\css\bootstrap.min.css">
+   <link rel="icon" type="text/css" href="images\others\favicon.png">
+	
+	<link rel="stylesheet" type="text/css" href="web-css.css">
+</head>
+<body class="container-fluid">
+         
+     <br>
+     <!-- carousel -->    
+     <div class="header"> <?php require("carousel.html"); ?> </div> 
+     <!-- making navigation system in bootstrap -->
+     <div><?php require("navigation.html"); ?></div>
+
+     <!--  dividing main ( 9 column) and sidebar(right 3 column) -->
+     <div class="container-fluid">
+     <div class="row">
+     	<div class="col-md-9 main">
+     		
+       <br>
+        <p class="text-center">
+          <img src="images\others\complaint.jpg" style="width: 100%;height: 400px;" alt="Complaint cell">
+           <h3>Our Complaint cell in Pakistan</h3>
+        </p>
+        <p>
+          Recently, we have got many of the complaints from our customers. We were getting burden of complaints. That was very defficult to handle complaints in our company. Users satisfactoin was lowering. So, we decided to make seprate complaint cell for all customers. So, their problems can be listened and solved in very mean time.
+        </p>
+        <p>
+          Please mail us directly to our complaint cell, or make call.
+        </p>
+        <p>
+          Mail: <a href="#">info@foodPointComplaintCell.com</a>
+        </p>
+        <p><span class="label label-primary">Karachi</span> Official Phone number: 0544-890843    </p>
+        <p><span class="label label-primary">Lahore</span> Official Phone number: 0544-830543    </p>
+        <p><span class="label label-primary">Faisalabad</span> Official Phone number: 0544-530743    </p>
+        <p><span class="label label-primary">Islamabad</span> Official Phone number: 0544-530642   </p>
+        <p><span class="label label-primary">Multan</span> Official Phone number: 0544-534642    </p>
+        <p><span class="label label-primary">Okara</span> Official Phone number: 0544-530342    </p>
+     	</div>`
+     	<!-- ending main  -->
+     	<div class="col-md-3">
+        <?php  require("sidebar.html"); ?>
+      </div>
+
+     </div>
+     </div>
+
+     <br>
+     <div class="foot">
+          <br>
+     	<?php echo " <center>Copy rights &copy reserved ".date("Y")."</center>"; require("footer.html");
+      
+       ?>
+     </div>
+
+
+
+</body>
+</html>

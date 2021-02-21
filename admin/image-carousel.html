@@ -1,0 +1,398 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Image Carousel</title>
+	<script type="text/javascript" src="..\files\js\jquery-3.3.1.js"></script>
+	<script type="text/javascript" src="..\files\js\bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="..\files\css\bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="web-css.css">
+</head>
+<body class="container-fluid">
+<center>
+     <br>
+	
+
+	<form method="post" action="" class="form-horizontal" style="width: 60%" enctype="multipart/form-data"> 
+    
+
+    <?php  
+          if(@$_GET['done'])
+          {
+            echo "<p style='color:green; width:60%;padding:10px;background-color: #ffffcc;border:2px dashed green;'>All Files and data uploded successfully!</p>";
+          } 
+          else if(@$_GET['notdone'])
+          {
+               echo "<p style='width:60%;padding:10px; color:red;background-color:#ffffcc;border:2px dashed red;'>All Files and data failed to upload!</p>";
+          }
+     ?>
+
+
+
+
+
+		<p>Here, you can upload only 6 images not more. If you upload more than 6 images only 6 images will be shown in carousel.</p>
+		
+
+		
+		<div class="form-group">
+			<label class="control-label col-md-3">Carousel  Image1:</label>
+			<div class="col-md-9">
+			<input type="file"  name="c_imag1" class="form-control" required="required">
+			<div class="help-block">
+			<?php 
+              if(@$_GET['image1'])
+              {
+               echo "<p style='color:red'> Image type should be jpg,png and jpeg.</p>";
+              }
+              else if(@$_GET['size1'])
+              {
+              	 echo "<p style='color:red'> Image size should be less than 2mb.</p>";
+              }
+              else if(@$_GET['fileAlready1'])
+              {
+              	echo "<p style='color:red'> Food image already exists!</p>";
+              }
+
+
+			  ?>
+				
+			</div>
+			</div>
+		</div>
+
+
+    <!-- image 2-->
+    <div class="form-group">
+      <label class="control-label col-md-3">Carousel  Image2:</label>
+      <div class="col-md-9">
+      <input type="file"  name="c_imag2" class="form-control" required="required">
+      <div class="help-block">
+      <?php 
+              if(@$_GET['image2'])
+              {
+               echo "<p style='color:red'> Image type should be jpg,png and jpeg.</p>";
+              }
+              else if(@$_GET['size2'])
+              {
+                 echo "<p style='color:red'> Image size should be less than 2mb.</p>";
+              }
+              else if(@$_GET['fileAlready2'])
+              {
+                echo "<p style='color:red'>  image already exists!</p>";
+              }
+
+
+        ?>
+      </div>
+      </div>
+    </div>
+
+
+    <!-- image 3-->
+    <div class="form-group">
+      <label class="control-label col-md-3">Carousel  Image3:</label>
+      <div class="col-md-9">
+      <input type="file"  name="c_imag3" class="form-control" required="required">
+      <div class="help-block">
+      <?php 
+              if(@$_GET['image3'])
+              {
+               echo "<p style='color:red'> Image type should be jpg,png and jpeg.</p>";
+              }
+              else if(@$_GET['size3'])
+              {
+                 echo "<p style='color:red'> Image size should be less than 2mb.</p>";
+              }
+              else if(@$_GET['fileAlready3'])
+              {
+                echo "<p style='color:red'>  image already exists!</p>";
+              }
+        ?>
+      </div>
+      </div>
+    </div>
+
+    <!-- image 4-->
+    <div class="form-group">
+      <label class="control-label col-md-3">Carousel  Image4:</label>
+      <div class="col-md-9">
+      <input type="file"  name="c_imag4" class="form-control" required="required">
+      <div class="help-block">
+      <?php 
+              if(@$_GET['image4'])
+              {
+               echo "<p style='color:red'> Image type should be jpg,png and jpeg.</p>";
+              }
+              else if(@$_GET['size4'])
+              {
+                 echo "<p style='color:red'> Image size should be less than 2mb.</p>";
+              }
+              else if(@$_GET['fileAlready4'])
+              {
+                echo "<p style='color:red'>  image already exists!</p>";
+              }
+        ?>
+      </div>
+      </div>
+    </div>
+
+    <!-- image 5-->
+    <div class="form-group">
+      <label class="control-label col-md-3">Carousel  Image5:</label>
+      <div class="col-md-9">
+      <input type="file"  name="c_imag5" class="form-control" required="required">
+      <div class="help-block">
+      <?php 
+              if(@$_GET['image5'])
+              {
+               echo "<p style='color:red'> Image type should be jpg,png and jpeg.</p>";
+              }
+              else if(@$_GET['size5'])
+              {
+                 echo "<p style='color:red'> Image size should be less than 2mb.</p>";
+              }
+              else if(@$_GET['fileAlready5'])
+              {
+                echo "<p style='color:red'>  image already exists!</p>";
+              }
+        ?>
+      </div>
+      </div>
+    </div>
+
+    <!-- image 6-->
+    <div class="form-group">
+      <label class="control-label col-md-3">Carousel  Image6:</label>
+      <div class="col-md-9">
+      <input type="file"  name="c_imag6" class="form-control" required="required">
+      <div class="help-block">
+      <?php 
+              if(@$_GET['image6'])
+              {
+               echo "<p style='color:red'> Image type should be jpg,png and jpeg.</p>";
+              }
+              else if(@$_GET['size6'])
+              {
+                 echo "<p style='color:red'> Image size should be less than 2mb.</p>";
+              }
+              else if(@$_GET['fileAlready6'])
+              {
+                echo "<p style='color:red'>  image already exists!</p>";
+              }
+        ?>
+      </div>
+      </div>
+    </div>
+
+		
+		<div class="form-group">
+			<input type="submit" name="food_submit" class="btn btn-primary" value="Submit Now">
+		</div>
+
+	</form>
+
+    
+</center>
+</body>
+</html>
+
+<?php
+      require("../database/database.html");
+  
+  
+  
+
+
+
+if(isset($_POST['food_submit']))
+{
+
+       
+         $image1_name=$_FILES['c_imag1']['name'];
+         $image1_size=$_FILES['c_imag1']['size'];
+         $image1_path=$_FILES['c_imag1']['tmp_name'];
+         $image1_type=$_FILES['c_imag1']['type'];
+
+         // second image
+         $image2_name=$_FILES['c_imag2']['name'];
+         $image2_size=$_FILES['c_imag2']['size'];
+         $image2_path=$_FILES['c_imag2']['tmp_name'];
+         $image2_type=$_FILES['c_imag2']['type'];
+
+         // third image
+         $image3_name=$_FILES['c_imag3']['name'];
+         $image3_size=$_FILES['c_imag3']['size'];
+         $image3_path=$_FILES['c_imag3']['tmp_name'];
+         $image3_type=$_FILES['c_imag3']['type'];
+
+         // 4 image
+         $image4_name=$_FILES['c_imag4']['name'];
+         $image4_size=$_FILES['c_imag4']['size'];
+         $image4_path=$_FILES['c_imag4']['tmp_name'];
+         $image4_type=$_FILES['c_imag4']['type'];
+
+         // 5 image
+         $image5_name=$_FILES['c_imag5']['name'];
+         $image5_size=$_FILES['c_imag5']['size'];
+         $image5_path=$_FILES['c_imag5']['tmp_name'];
+         $image5_type=$_FILES['c_imag5']['type'];
+
+         // 6image
+         $image6_name=$_FILES['c_imag6']['name'];
+         $image6_size=$_FILES['c_imag6']['size'];
+         $image6_path=$_FILES['c_imag6']['tmp_name'];
+         $image6_type=$_FILES['c_imag6']['type'];
+
+          
+        // placing image1
+         $files1_to_upload="../images/carousel-images/".basename($image1_name);
+         $image1_path_to_save_in_database="images/carousel-images/".basename($image1_name);
+
+          // placing image2
+         $files2_to_upload="../images/carousel-images/".basename($image2_name);
+         $image2_path_to_save_in_database="images/carousel-images/".basename($image2_name);
+
+          // placing image3
+         $files3_to_upload="../images/carousel-images/".basename($image3_name);
+         $image3_path_to_save_in_database="images/carousel-images/".basename($image3_name);
+
+          // placing image4
+         $files4_to_upload="../images/carousel-images/".basename($image4_name);
+         $image4_path_to_save_in_database="images/carousel-images/".basename($image4_name);
+
+          // placing image5
+         $files5_to_upload="../images/carousel-images/".basename($image5_name);
+         $image5_path_to_save_in_database="images/carousel-images/".basename($image5_name);
+
+          // placing image6
+         $files6_to_upload="../images/carousel-images/".basename($image6_name);
+         $image6_path_to_save_in_database="images/carousel-images/".basename($image6_name);
+    
+
+
+    // checking image type 1
+   if(!( $image1_type=="image/png" or $image1_type=="image/jpeg" or $image1_type=="image/jpg"))
+   {
+   	   echo "<script>window.open('index.html?imageCaro=imageCaro&image1=nottrue','_self')</script>";
+      exit();
+   }
+      if($image1_size > 2000000)
+   {
+   	 echo "<script>window.open('index.html?imageCaro=imageCaro&imageCaro&size1=nottrue','_self')</script>";
+      exit();
+   }
+   if(file_exists($files1_to_upload)){
+   echo "<script>window.open('index.html?imageCaro=imageCaro&fileAlready1=nottrue','_self')</script>";
+      exit();
+   }
+
+
+   // checking image type 2
+   if(!( ($image2_type=="image/png") or ($image2_type=="image/jpeg") or ($image2_type=="image/jpg")))
+   {
+       echo "<script>window.open('index.html?imageCaro=imageCaro&image2=nottrue','_self')</script>";
+      exit();
+   }
+      if($image1_size > 2000000)
+   {
+     echo "<script>window.open('index.html?imageCaro=imageCaro&size2=nottrue','_self')</script>";
+      exit();
+   }
+   if(file_exists($files2_to_upload)){
+   echo "<script>window.open('index.html?imageCaro=imageCaro&fileAlready2=nottrue','_self')</script>";
+      exit();
+   }
+
+   // checking image type 3
+   if(!( ($image3_type=="image/png") or ($image3_type=="image/jpeg") or ($image3_type=="image/jpg")))
+   {
+       echo "<script>window.open('index.html?imageCaro=imageCaro&image3=nottrue','_self')</script>";
+      exit();
+   }
+      if($image1_size > 2000000)
+   {
+     echo "<script>window.open('index.html?imageCaro=imageCaro&size3=nottrue','_self')</script>";
+      exit();
+   }
+   if(file_exists($files3_to_upload)){
+   echo "<script>window.open('index.html?imageCaro=imageCaro&fileAlready3=nottrue','_self')</script>";
+      exit();
+   }
+
+   // checking image type 4
+   if(!( ($image4_type=="image/png") or ($image4_type=="image/jpeg") or ($image4_type=="image/jpg")))
+   {
+       echo "<script>window.open('index.html?imageCaro=imageCaro&image4=nottrue','_self')</script>";
+      exit();
+   }
+      if($image1_size > 2000000)
+   {
+     echo "<script>window.open('index.html?imageCaro=imageCaro&size4=nottrue','_self')</script>";
+      exit();
+   }
+   if(file_exists($files4_to_upload)){
+   echo "<script>window.open('index.html?imageCaro=imageCaro&fileAlready4=nottrue','_self')</script>";
+      exit();
+   }
+
+   // checking image type 5
+   if(!( ($image5_type=="image/png") or ($image5_type=="image/jpeg") or ($image5_type=="image/jpg")))
+   {
+       echo "<script>window.open('index.html?imageCaro=imageCaro&image5=nottrue','_self')</script>";
+      exit();
+   }
+      if($image1_size > 2000000)
+   {
+     echo "<script>window.open('index.html?imageCaro=imageCaro&size5=nottrue','_self')</script>";
+      exit();
+   }
+   if(file_exists($files5_to_upload)){
+   echo "<script>window.open('index.html?imageCaro=imageCaro&fileAlready5=nottrue','_self')</script>";
+      exit();
+   }
+
+
+   // checking image type 6
+   if(!( ($image6_type=="image/png") or ($image6_type=="image/jpeg") or ($image6_type=="image/jpg")))
+   {
+       echo "<script>window.open('index.html?imageCaro=imageCaro&image6=nottrue','_self')</script>";
+      exit();
+   }
+      if($image1_size > 2000000)
+   {
+     echo "<script>window.open('index.html?imageCaro=imageCaro&?size6=nottrue','_self')</script>";
+      exit();
+   }
+   if(file_exists($files6_to_upload)){
+   echo "<script>window.open('index.html?imageCaro=imageCaro&fileAlready6=nottrue','_self')</script>";
+      exit();
+   }
+
+   $query="insert into carousel(imageName,imagePath) values('$image1_name','$image1_path_to_save_in_database');";
+   $query.="insert into carousel(imageName,imagePath) values('$image2_name','$image2_path_to_save_in_database');";
+   $query.="insert into carousel(imageName,imagePath) values('$image3_name','$image3_path_to_save_in_database');";
+   $query.="insert into carousel(imageName,imagePath) values('$image4_name','$image4_path_to_save_in_database');";
+   $query.="insert into carousel(imageName,imagePath) values('$image5_name','$image5_path_to_save_in_database');";
+   $query.="insert into carousel(imageName,imagePath) values('$image6_name','$image6_path_to_save_in_database');";
+
+
+   if(move_uploaded_file($image1_path, $files1_to_upload) and move_uploaded_file($image2_path, $files2_to_upload) and move_uploaded_file($image3_path, $files3_to_upload) and move_uploaded_file($image4_path, $files4_to_upload) and move_uploaded_file($image5_path, $files5_to_upload) and move_uploaded_file($image6_path, $files6_to_upload) and 
+    $con->multi_query($query))
+   {
+       echo "<script>window.open('index.html?imageCaro=imageCaro&done=done','_self')</script>";
+   }
+   else
+   {
+       echo "<script>window.open('index.html?imageCaro=imageCaro&notdone=notdone','_self')</script>";
+   }
+
+  
+
+   
+}
+
+
+
+ ?>

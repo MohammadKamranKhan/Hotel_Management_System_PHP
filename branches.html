@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>FoodPoint</title>
+	<script type="text/javascript" src="files\js\jquery-3.3.1.js"></script>
+	<script type="text/javascript" src="files\js\bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="files\css\bootstrap.min.css">
+   <link rel="icon" type="text/css" href="images\others\favicon.png">
+	
+	<link rel="stylesheet" type="text/css" href="web-css.css">
+</head>
+<body class="container-fluid">
+         
+     <br>
+     <!-- carousel -->    
+     <div class="header"> <?php require("carousel.html"); ?> </div> 
+     <!-- making navigation system in bootstrap -->
+     <div><?php require("navigation.html"); ?></div>
+
+     <!--  dividing main ( 9 column) and sidebar(right 3 column) -->
+     <div class="container-fluid">
+     <div class="row">
+     	<div class="col-md-9 main">
+     		
+        <h3>Our Branches in Pakistan</h3>
+
+        <?php
+          
+          require("database/database.html");
+          $query="select * from branches ";
+          $run=$con->query($query);
+          while($row=$run->fetch_assoc())
+          {
+          
+          $id=$row['ID'];
+          $b_name=$row['branch_name'];
+          $b_add=$row['branch_address'];
+          $b_phone=$row['branch_phone'];
+          $b_email=$row['branch_email'];
+          $b_web=$row['branch_website'];
+          $b_face=$row['branch_facebook'];
+
+         ?>
+
+       <div class="text-justify">
+         <div>
+           <h5>Branch Name: <?php echo $b_name; ?> </h5>
+            <h6>Branch Address: <?php echo $b_add; ?></h6>
+           <h6>Branch Phone: <?php echo $b_phone; ?></h6>
+           <h6>Email: <?php echo $b_email; ?></h6>
+           <h6>Website: <a href="index.html"> <?php echo $b_web; ?></a></h6>
+           <h6>Facebook: <a href="#"> <?php echo $b_face; ?> </a></h6>
+           <br>
+         </div>
+
+         
+
+       </div>
+
+
+       <?php } ?>
+     	</div>
+     	<!-- ending main  -->
+     	<div class="col-md-3">
+        <?php  require("sidebar.html"); ?>
+      </div>
+
+     </div>
+     </div>
+
+     <br>
+     <div class="foot">
+          <br>
+     	<?php echo " <center>Copy rights &copy reserved ".date("Y")."</center>"; require("footer.html");
+      
+       ?>
+     </div>
+
+
+
+</body>
+</html>

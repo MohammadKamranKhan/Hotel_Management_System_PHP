@@ -1,0 +1,103 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Add a new user </title>
+	 <script type="text/javascript" src="..\files\js\jquery-3.3.1.js"></script>
+  <script type="text/javascript" src="..\files\js\bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="..\files\css\bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="web-css.css">
+</head>
+<body class="container-fluid">
+   
+    <br><br>
+      
+
+   <center>
+      <form action="" method="post" class="form-horizontal" style="width: 60%">
+      	<div class="form-group">
+      	<label class="control-label col-md-2">username:</label>
+      	<div class="col-md-10">
+        <input type="text" name="uname" class="form-control" required="required" placeholder="username">
+        <div class="help-block text-left">
+          <?php if(@$_GET['user']) { echo "<p style='color:red'>Please enter atleast 8 characters!</p>";} ?>
+        </div>
+        </div>
+      	</div>
+
+      	<div class="form-group">
+      	<label class="control-label col-md-2">password:</label>
+      	<div class="col-md-10">
+        <input type="password" name="upassword" class="form-control" required="required" placeholder="password">
+        <div class="help-block text-left">
+          <?php if(@$_GET['pass']) { echo "<p style='color:red'>your password should contain at least 8 characters!</p>";} ?>
+        </div>
+      	</div>
+        </div>
+
+        <div class="form-group">
+        <label class="control-label col-md-2">Confirm password:</label>
+        <div class="col-md-10">
+        <input type="password" name="cpassword" class="form-control" required="required" placeholder="confirm password">
+        <div class="help-block text-left">
+          <?php if(@$_GET['dnth']) { echo "<p style='color:red'>Confirm password does not match!</p>";} ?>
+        </div>
+        
+        </div>
+        </div>
+         
+         
+      	<input type="submit" value="Add Now" name="submit" id="bn" class="btn btn-primary" style="width: 30%">
+
+      </form>
+      </center>
+
+
+      <p></p>
+
+
+      
+     
+
+</body>
+</html>
+
+<?php
+if(isset($_POST['submit']))
+{
+  require "../database/database.html";
+   $user=$_POST['uname'];
+   $upassword=$_POST['upassword'];
+   $cpassword=$_POST['cpassword'];
+
+   if(strlen($user) < 8)
+   {
+      echo "<script>window.open('index.html?chlp=chlp&new=user&user=cu','_self')</script>";
+   }
+   else if (strlen($upassword) < 8) {
+     echo "<script>window.open('index.html?chlp=chlp&new=user&pass=cu','_self')</script>"; 
+   }
+   else if($upassword != $cpassword)
+   {
+    echo "<script>window.open('index.html?chlp=chlp&new=user&dnth=cu','_self')</script>"; 
+
+   }
+   else
+   {
+    $query="insert into login(username,password) values('$user','$upassword')";
+    if($con->query($query))
+     {
+         echo "<script>window.open('index.html?chlp=chlp&done=done','_self')</script>"; 
+
+     }
+     else
+     {
+         echo "<script>window.open('index.html?chlp=chlp&notdone=notdone','_self')</script>"; 
+
+     }
+
+   }
+
+
+}
+ ?>

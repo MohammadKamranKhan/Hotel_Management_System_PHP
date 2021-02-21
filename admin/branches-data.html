@@ -1,0 +1,139 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Branches Details</title>
+	<script type="text/javascript" src="..\files\js\jquery-3.3.1.js"></script>
+	<script type="text/javascript" src="..\files\js\bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="..\files\css\bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="web-css.css">
+</head>
+<body class="container-fluid">
+
+
+
+
+<div class="table-responsive">
+
+<center>
+
+
+<?php
+
+
+          if(@$_GET['pass'])
+          {
+
+            echo "<br><p style='color:green; width:60%;padding:10px;background-color: #ffffcc;border:2px dashed green;'>Deleted Successfully!</p>";
+          } 
+          else if(@$_GET['fail'])
+          {
+               echo "<p style='width:60%;padding:10px; color:red;background-color:#ffffcc;border:2px dashed red;'>Could not be deleted!</p>";
+          }
+
+          if(@$_GET['done'])
+          {
+
+            echo "<br><p style='color:green; width:60%;padding:10px;background-color: #ffffcc;border:2px dashed green;'>Updated Successfully!</p>";
+          } 
+          else if(@$_GET['notdone'])
+          {
+               echo "<br><p style='width:60%;padding:10px; color:red;background-color:#ffffcc;border:2px dashed red;'>Could not be updated!</p>";
+          }
+
+
+ ?>
+
+<table class="table table-bordered table-hover" style="width: 80%;">
+<caption class="text-center"><h3><u>Branches Detail</u></h3></caption> 
+
+<h4>Company Facebook Page:  
+<span><a id="face" href="#"></a></span>    
+</h4>
+
+<h4>Company website:  
+<span><a id="web" href="#"></a></span>    
+</h4>
+
+
+<tr>
+  <th class="text-center">ID</th>
+  <th class="text-center">Branch Registeration#</th>
+  <th class="text-center">Name</th>
+  <th class="text-center">Address</th>
+  <th class="text-center">Phone</th>
+ 
+  <th class="text-center">Edit</th>
+  <th class="text-center">Delete</th>
+</tr>
+
+<?php
+     require("../database/database.html");
+     $query="select * from branches";
+     $run=$con->query($query);
+     $count=0;
+     while($row=$run->fetch_assoc())
+     {
+      $count++;
+       $branch_reg=$row['ID'];
+       $branch_name=$row['branch_name'];
+       $branch_address=$row['branch_address'];
+       $branch_phone=$row['branch_phone'];
+     //  $branch_email=$row['branch_email'];
+       $branch_facebook=$row['branch_facebook'];
+       $branch_website=$row['branch_website'];
+       $phone_four=substr($branch_phone, 0,4);
+       $phone_after_four=substr($branch_phone, 4);
+       $phone_total=$phone_four."-".$phone_after_four;
+       echo "<script type='text/javascript'>document.getElementById('face').innerHTML='$branch_facebook'</script>";
+       echo "<script type='text/javascript'>document.getElementById('web').innerHTML='$branch_website'</script>";
+
+ ?>
+
+
+
+<tr class="text-center">
+  
+
+  <td><?php echo $count; ?></td>
+  <td><?php echo $branch_reg;  ?></td>
+  <td><?php echo $branch_name;  ?></td>
+  <td><?php echo $branch_address;  ?></td>
+   <td><?php echo $phone_total;  ?></td>
+   
+  <td><?php echo "<a href='branches-edit.html?brId=$branch_reg'  class='btn btn-primary' style='width:70px;'>Edit</a> "; ?></td>
+  <td><?php echo "<a href='index.html?br=br&delin=$branch_reg' class='btn btn-primary' style='width:70px;'>Delete</a> "; ?></td>
+</tr>
+  <?php  } ?>
+
+</table>
+</center>
+</div>
+
+</body>
+</html>
+
+<?php 
+
+
+     if(isset($_GET['delin']) )
+  {
+
+         $id=@$_GET['delin'];
+          
+              $query="delete from branches where ID='$id'";
+              if($con->query($query))
+              {
+                 echo "<script>window.open('index.html?br=br&pass=pass','_self')</script>";
+              }
+              else
+              {
+                echo "<script>window.open('index.html?br=br&fail=fail','_self')</script>";
+              }
+            
+    }
+
+
+
+?>

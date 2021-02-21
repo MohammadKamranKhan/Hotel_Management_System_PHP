@@ -1,0 +1,152 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Orders from customers</title>
+	<script type="text/javascript" src="..\files\js\jquery-3.3.1.js"></script>
+	<script type="text/javascript" src="..\files\js\bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="..\files\css\bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="web-css.css">
+</head>
+<body class="container-fluid">
+
+
+
+
+<div class="table-responsive">
+
+<center>
+
+
+
+<table class="table table-bordered table-hover" style="width: 80%;">
+<caption ><center><h3><u>Order Details</u></h3></center>
+</caption> 
+<?php  
+          if(@$_GET['pass'])
+          {
+            echo "<p style='color:green; width:60%;padding:10px;background-color: #ffffcc;border:2px dashed green;'>Cleared All delieverd orders successfully!</p>";
+          } 
+          else if(@$_GET['fail'])
+          {
+               echo "<p style='width:60%;padding:10px; color:red;background-color:#ffffcc;border:2px dashed red;'>Sorry! could not clear all delivered orders.</p>";
+          }
+
+      if(@$_GET['done'])
+          {
+
+            echo "<br><p style='color:green; width:60%;padding:10px;background-color: #ffffcc;border:2px dashed green;'>Updated Successfully!</p>";
+          } 
+          else if(@$_GET['notdone'])
+          {
+               echo "<br><p style='width:60%;padding:10px; color:red;background-color:#ffffcc;border:2px dashed red;'>Could not be deleted!</p>";
+          }
+
+
+     ?>
+
+<tr>
+  <th class="text-center">ID</th>
+  <th class="text-center">Order#</th>
+  <th class="text-center">Cutomer Name</th>
+  <th class="text-center">Customer Address</th>
+  <th class="text-center">Customer Contact</th>
+  <th class="text-center">Food Ordered</th>
+  <th class="text-center">Food category</th>
+  <th class="text-center">Food Quantity</th>
+  <th class="text-center">Ordered Status</th>
+  <th class="text-center">Ordered Time</th>
+  <th class="text-center">Total Bill</th>
+  <th class="text-center">Edit</th>
+ 
+</tr>
+
+<?php
+     require("../database/database.html");
+     $query="select * from orders";
+     $run=$con->query($query);
+     $count=0;
+     while($row=$run->fetch_assoc())
+     {
+      $count++;
+       $order_id=$row['ID'];
+       $customer_name=$row['Customer_name'];
+       $customer_address=$row['Address'];
+       $customer_contact=$row['Email_phone'];
+       $food_ordered=$row['Food_ordered'];
+       //$food_price=$row['Food_price'];
+       $food_qun=$row['food_quantity'];
+       $food_cate=$row['food_category'];
+       $total_bill=$row['Total_bill'];
+       $order_status=$row['Order_status'];
+       $order_time=$row['Order_time'];
+     
+       
+
+ ?>
+
+
+
+<tr class="text-center">
+  
+
+  <td><?php echo $count; ?></td>
+  <td><?php echo $order_id; ?></td>
+  <td><?php echo $customer_name;  ?></td>
+  <td><?php echo $customer_address;  ?></td>
+  <td><?php echo $customer_contact  ?></td>
+   <td><?php echo $food_ordered;  ?></td>
+    
+    <td><?php echo $food_cate;  ?></td>
+    <td><?php echo $food_qun;  ?></td>
+    <td><?php echo $order_status; ?></td>
+    <td><?php echo $order_time; ?></td>
+    <td><?php echo "Rs. ".$total_bill; ?> </td>
+    <td><a href="change-order-status.html?chid=<?php echo $order_id; ?>" class="btn btn-primary">Edit</a></td>
+
+</tr>
+  <?php  } ?>
+
+
+
+
+
+
+</table>
+
+<a href="index.html?ord3=ord3" target="_self" class="btn btn-primary">Show delivered orders</a>
+<a href="index.html?ord2=ord2" target="_self" class="btn btn-primary">Show pending orders</a>
+<a href="index.html?clear=clear" class="btn btn-primary" target="_self">Clear delivered orders</a>
+
+</center>
+</div>
+
+</body>
+</html>
+
+
+<?php 
+
+
+     if(isset($_GET['clear']) )
+  {
+
+         
+          
+              
+              $query="delete from orders where Order_status='Delivered'";
+              if($con->query($query))
+              {
+                 echo "<script>window.open('index.html?ord=ord&pass=pass','_self')</script>";
+              }
+              else
+              {
+                echo "<script>window.open('index.html?ord=ord&pass=pass','_self')</script>";
+              }
+            
+    }
+
+
+
+?>
